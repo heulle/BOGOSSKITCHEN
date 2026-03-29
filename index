@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOGOSS KITCHEN</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1915;
+    --surface2: #22211d;
+    --accent: #e8c547;
+    --accent2: #e07a3b;
+    --light: #f5f0e8;
+    --muted: #7a7670;
+    --leger: #5fa87a;
+    --flemme: #e07a3b;
+    --comfort: #c44f3b;
+    --border: rgba(232,197,71,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--light);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    padding: 60px 40px 40px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #141310 0%, transparent 100%);
+    overflow: hidden;
+  }
+
+  header::before {
+    content: 'BK';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 260px;
+    color: rgba(232,197,71,0.04);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 100px);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    position: relative;
+  }
+
+  .logo span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .tagline {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 30px 40px;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(15,14,12,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .roll-btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    background: var(--accent);
+    color: #0f0e0c;
+    border: none;
+    padding: 12px 32px;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .roll-btn:hover {
+    background: var(--accent2);
+    transform: scale(1.03);
+  }
+
+  .filter-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-btn[data-cat="léger"].active { border-color: var(--leger); color: var(--leger); }
+  .filter-btn[data-cat="flemme"].active { border-color: var(--flemme); color: var(--flemme); }
+  .filter-btn[data-cat="comfort"].active { border-color: var(--comfort); color: var(--comfort); }
+
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+
+  .search-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 9px 16px 9px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    width: 200px;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  /* LUCKY PICK BANNER */
+  #lucky-banner {
+    display: none;
+    margin: 24px 40px;
+    padding: 24px 32px;
+    background: var(--surface2);
+    border-left: 4px solid var(--accent);
+    animation: slideIn 0.3s ease;
+    position: relative;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #lucky-banner .label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  #lucky-banner .meal-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  #lucky-banner .meal-cat {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  #lucky-banner .close-lucky {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  #lucky-banner .close-lucky:hover { color: var(--light); }
+
+  /* MAIN GRID */
+  main {
+    padding: 32px 40px 80px;
+  }
+
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.08em;
+  }
+
+  .section-title.leger { color: var(--leger); }
+  .section-title.flemme { color: var(--flemme); }
+  .section-title.comfort { color: var(--comfort); }
+
+  .section-count {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .meals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .meal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 3px;
+    animation: cardIn 0.3s ease both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .meal-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: transparent;
+    transition: background 0.2s;
+  }
+
+  .meal-card.leger::before { background: var(--leger); }
+  .meal-card.flemme::before { background: var(--flemme); }
+  .meal-card.comfort::before { background: var(--comfort); }
+
+  .meal-card:hover {
+    background: var(--surface2);
+    border-color: rgba(232,197,71,0.3);
+    transform: translateY(-2px);
+  }
+
+  .meal-card:hover .meal-emoji { transform: scale(1.15); }
+
+  .meal-emoji {
+    font-size: 22px;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+
+  .meal-name-card {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--light);
+    text-transform: capitalize;
+  }
+
+  .meal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 1px;
+    font-weight: 500;
+  }
+
+  .tag.leger { background: rgba(95,168,122,0.15); color: var(--leger); }
+  .tag.flemme { background: rgba(224,122,59,0.15); color: var(--flemme); }
+  .tag.comfort { background: rgba(196,79,59,0.15); color: var(--comfort); }
+
+  .delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    transition: color 0.15s;
+    padding: 2px;
+  }
+
+  .meal-card:hover .delete-btn { color: var(--muted); }
+  .delete-btn:hover { color: var(--comfort) !important; }
+
+  /* ADD MEAL */
+  .add-section {
+    position: fixed;
+    bottom: 32px;
+    right: 40px;
+    z-index: 200;
+  }
+
+  .add-btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    background: var(--accent);
+    color: #0f0e0c;
+    border: none;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    box-shadow: 0 8px 32px rgba(232,197,71,0.3);
+  }
+
+  .add-btn:hover {
+    background: var(--accent2);
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(224,122,59,0.4);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,9,8,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    width: min(480px, 90vw);
+    border-top: 3px solid var(--accent);
+    animation: modalIn 0.25s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+  }
+
+  .modal-title span { color: var(--accent); }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--light);
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--muted); }
+
+  .cat-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .cat-option {
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: all 0.18s;
+    text-align: center;
+  }
+
+  .cat-option[data-val="léger"]:hover,
+  .cat-option[data-val="léger"].selected { border-color: var(--leger); color: var(--leger); background: rgba(95,168,122,0.1); }
+  .cat-option[data-val="flemme"]:hover,
+  .cat-option[data-val="flemme"].selected { border-color: var(--flemme); color: var(--flemme); background: rgba(224,122,59,0.1); }
+  .cat-option[data-val="comfort"]:hover,
+  .cat-option[data-val="comfort"].selected { border-color: var(--comfort); color: var(--comfort); background: rgba(196,79,59,0.1); }
+
+  .emoji-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .emoji-opt {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .emoji-opt:hover, .emoji-opt.selected { border-color: var(--accent); background: rgba(232,197,71,0.08); }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .btn-save {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    background: var(--accent);
+    color: #0f0e0c;
+    border: none;
+    padding: 12px 32px;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    flex: 1;
+    transition: background 0.2s;
+  }
+
+  .btn-save:hover { background: var(--accent2); }
+
+  .btn-cancel {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 12px 24px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-cancel:hover { border-color: var(--muted); color: var(--light); }
+
+  /* EMPTY */
+  .empty-msg {
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    padding: 20px 0;
+  }
+
+  .hidden { display: none !important; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 12px 20px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    z-index: 9999;
+    animation: toastIn 0.2s ease;
+    border-radius: 2px;
+  }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    header, main, .controls { padding-left: 20px; padding-right: 20px; }
+    #lucky-banner { margin-left: 20px; margin-right: 20px; }
+    .add-section { right: 20px; bottom: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BOGOSS<span>KITCHEN</span></div>
+  <div class="tagline">🍳 Décide ce soir. Sans te prendre la tête.</div>
+</header>
+
+<div class="controls">
+  <button class="roll-btn" onclick="rollDice()">🎲 INSPIRE-MOI</button>
+  <div class="filter-btns">
+    <button class="filter-btn active" data-cat="all" onclick="setFilter('all', this)">Tout</button>
+    <button class="filter-btn" data-cat="léger" onclick="setFilter('léger', this)">🥗 Léger</button>
+    <button class="filter-btn" data-cat="flemme" onclick="setFilter('flemme', this)">🛋️ Flemme</button>
+    <button class="filter-btn" data-cat="comfort" onclick="setFilter('comfort', this)">🫕 Comfort</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" id="search" placeholder="Chercher un plat..." oninput="renderAll()">
+  </div>
+</div>
+
+<div id="lucky-banner">
+  <button class="close-lucky" onclick="closeLucky()">✕</button>
+  <div class="label">Ce soir c'est :</div>
+  <div class="meal-name" id="lucky-name"></div>
+  <div class="meal-cat" id="lucky-cat"></div>
+</div>
+
+<main>
+  <div class="section" id="section-leger">
+    <div class="section-header">
+      <div>
+        <div class="section-title leger">🥗 LÉGER</div>
+        <div class="section-count" id="count-leger"></div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="meals-grid" id="grid-leger"></div>
+  </div>
+
+  <div class="section" id="section-flemme">
+    <div class="section-header">
+      <div>
+        <div class="section-title flemme">🛋️ FLEMME</div>
+        <div class="section-count" id="count-flemme"></div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="meals-grid" id="grid-flemme"></div>
+  </div>
+
+  <div class="section" id="section-comfort">
+    <div class="section-header">
+      <div>
+        <div class="section-title comfort">🫕 COMFORT FOOD</div>
+        <div class="section-count" id="count-comfort"></div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="meals-grid" id="grid-comfort"></div>
+  </div>
+</main>
+
+<div class="add-section">
+  <button class="add-btn" onclick="openModal()">+ AJOUTER UN PLAT</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="maybeClose(event)">
+  <div class="modal">
+    <div class="modal-title">NOUVEAU <span>PLAT</span></div>
+
+    <div class="form-group">
+      <label class="form-label">Nom du plat</label>
+      <input class="form-input" id="input-name" type="text" placeholder="ex: Pâtes carbonara...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Catégorie</label>
+      <div class="cat-selector">
+        <button class="cat-option" data-val="léger" onclick="selectCat('léger')">🥗 Léger</button>
+        <button class="cat-option" data-val="flemme" onclick="selectCat('flemme')">🛋️ Flemme</button>
+        <button class="cat-option" data-val="comfort" onclick="selectCat('comfort')">🫕 Comfort</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Emoji</label>
+      <div class="emoji-picker" id="emoji-picker">
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍝</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥗</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍕</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍔</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥙</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🌯</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍳</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥩</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍗</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🌭</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥪</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🫕</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍜</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍱</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥚</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🧆</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥘</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🫔</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🍞</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🐟</span>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-save" onclick="saveNewMeal()">AJOUTER</button>
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_MEALS = [
+  // LÉGER
+  { id: 1, name: "Salade caprese (mozza, tomates, roquette)", cat: "léger", emoji: "🥗" },
+  { id: 2, name: "Salade, boulettes sauce tomate", cat: "léger", emoji: "🥗" },
+  { id: 3, name: "Salade César (poulet, parmesan, graines)", cat: "léger", emoji: "🥗" },
+  { id: 4, name: "Salade onions rouges confits, poulet, tomates cerise, parmesan, pomme, graines", cat: "léger", emoji: "🥗" },
+  { id: 5, name: "Toast avocat", cat: "léger", emoji: "🥑" },
+  { id: 6, name: "Tartines et soupe", cat: "léger", emoji: "🍞" },
+  { id: 7, name: "Tartine, poulet, mozza, ail des ours, persil", cat: "léger", emoji: "🍞" },
+  { id: 8, name: "Omelette et frites", cat: "léger", emoji: "🍳" },
+  { id: 9, name: "Brochettes de dinde, riz et légumes", cat: "léger", emoji: "🍢" },
+  { id: 10, name: "Riz, légumes wok et poulet", cat: "léger", emoji: "🍚" },
+  { id: 11, name: "Pâtes crème brocolis poulet ou saumon, carottes, tomate, onions", cat: "léger", emoji: "🍝" },
+  { id: 12, name: "Ramen de porc croustillant (ou poulet)", cat: "léger", emoji: "🍜" },
+  { id: 13, name: "Onions jeunes, bouillon, poulet", cat: "léger", emoji: "🍵" },
+  { id: 35, name: "Poké bowl", cat: "léger", emoji: "🥣" },
+
+  // FLEMME
+  { id: 14, name: "Pâtes haché et légumes", cat: "flemme", emoji: "🍝" },
+  { id: 15, name: "Pâtes jambon fromage", cat: "flemme", emoji: "🍝" },
+  { id: 16, name: "Pâtes poivre", cat: "flemme", emoji: "🍝" },
+  { id: 17, name: "Saucisses compote", cat: "flemme", emoji: "🌭" },
+  { id: 18, name: "Pain saucisse", cat: "flemme", emoji: "🌭" },
+  { id: 19, name: "Croque monsieur", cat: "flemme", emoji: "🥪" },
+  { id: 20, name: "Riz et cordon bleu", cat: "flemme", emoji: "🍚" },
+  { id: 21, name: "Durum / Wraps", cat: "flemme", emoji: "🌯" },
+  { id: 22, name: "Pita, frites", cat: "flemme", emoji: "🥙" },
+  { id: 23, name: "Poulet rôti et accompagnement", cat: "flemme", emoji: "🍗" },
+  { id: 24, name: "Saucisses au four, onions, tomates cerises, poivrons, basilic ou thym", cat: "flemme", emoji: "🌭" },
+  { id: 25, name: "Couques, poulet, tomate, salade, dressing César", cat: "flemme", emoji: "🥖" },
+
+  // COMFORT
+  { id: 26, name: "Tomates farcies et pâtes", cat: "comfort", emoji: "🍅" },
+  { id: 27, name: "Ragù bolognese et pâtes", cat: "comfort", emoji: "🍝" },
+  { id: 28, name: "Carbonara", cat: "comfort", emoji: "🍝" },
+  { id: 29, name: "Escalope milanaise et pâtes", cat: "comfort", emoji: "🥩" },
+  { id: 30, name: "Pinsa poulet pesto tomates mozza", cat: "comfort", emoji: "🍕" },
+  { id: 31, name: "Pâtes burrata pesto tomates mortadelle ou jambon", cat: "comfort", emoji: "🍝" },
+  { id: 32, name: "Hachis parmentier", cat: "comfort", emoji: "🥘" },
+  { id: 33, name: "Burgers poulet", cat: "comfort", emoji: "🍔" },
+  { id: 34, name: "Hachis parmentier", cat: "comfort", emoji: "🥘" },
+];
+
+const STORAGE_KEY = 'bogoss_kitchen_meals';
+let currentFilter = 'all';
+let selectedCat = null;
+let selectedEmoji = '🍝';
+
+function loadMeals() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_MEALS));
+}
+
+function saveMeals(meals) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(meals)); } catch(e) {}
+}
+
+let meals = loadMeals();
+
+function getQuery() {
+  return document.getElementById('search').value.toLowerCase().trim();
+}
+
+function renderAll() {
+  const q = getQuery();
+  ['léger','flemme','comfort'].forEach(cat => {
+    const catId = cat === 'léger' ? 'leger' : cat;
+    let filtered = meals.filter(m => m.cat === cat);
+    if (currentFilter !== 'all' && currentFilter !== cat) filtered = [];
+    if (q) filtered = filtered.filter(m => m.name.toLowerCase().includes(q));
+
+    const grid = document.getElementById('grid-' + catId);
+    const count = document.getElementById('count-' + catId);
+    const section = document.getElementById('section-' + catId);
+
+    count.textContent = `${filtered.length} plat${filtered.length > 1 ? 's' : ''}`;
+
+    if ((currentFilter !== 'all' && currentFilter !== cat)) {
+      section.classList.add('hidden');
+      return;
+    }
+    section.classList.remove('hidden');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-msg">Aucun plat trouvé.</div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map(m => `
+      <div class="meal-card ${m.cat}" style="animation-delay:${Math.random()*0.1}s">
+        <span class="meal-emoji">${m.emoji}</span>
+        <div class="meal-name-card">${m.name}</div>
+        <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort'}</span></div>
+        <button class="delete-btn" onclick="deleteMeal(${m.id}, event)" title="Supprimer">✕</button>
+      </div>
+    `).join('');
+  });
+}
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function rollDice() {
+  const q = getQuery();
+  let pool = meals;
+  if (currentFilter !== 'all') pool = pool.filter(m => m.cat === currentFilter);
+  if (q) pool = pool.filter(m => m.name.toLowerCase().includes(q));
+  if (!pool.length) { showToast('Aucun plat disponible 😅'); return; }
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  document.getElementById('lucky-name').textContent = pick.emoji + ' ' + pick.name;
+  document.getElementById('lucky-cat').textContent = pick.cat === 'léger' ? '🥗 Léger' : pick.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
+  const b = document.getElementById('lucky-banner');
+  b.style.display = 'none';
+  void b.offsetWidth;
+  b.style.display = 'block';
+}
+
+function closeLucky() {
+  document.getElementById('lucky-banner').style.display = 'none';
+}
+
+function deleteMeal(id, e) {
+  e.stopPropagation();
+  if (!confirm('Supprimer ce plat ?')) return;
+  meals = meals.filter(m => m.id !== id);
+  saveMeals(meals);
+  renderAll();
+  showToast('Plat supprimé');
+}
+
+// MODAL
+function openModal() {
+  selectedCat = null;
+  selectedEmoji = '🍝';
+  document.getElementById('input-name').value = '';
+  document.querySelectorAll('.cat-option').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.emoji-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelector('.emoji-opt').classList.add('selected');
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('input-name').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function maybeClose(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+function selectCat(val) {
+  selectedCat = val;
+  document.querySelectorAll('.cat-option').forEach(b => b.classList.remove('selected'));
+  document.querySelector(`.cat-option[data-val="${val}"]`).classList.add('selected');
+}
+
+function selectEmoji(el) {
+  selectedEmoji = el.textContent;
+  document.querySelectorAll('.emoji-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function saveNewMeal() {
+  const name = document.getElementById('input-name').value.trim();
+  if (!name) { showToast('Donne un nom au plat 👀'); return; }
+  if (!selectedCat) { showToast('Choisis une catégorie'); return; }
+  const newMeal = {
+    id: Date.now(),
+    name,
+    cat: selectedCat,
+    emoji: selectedEmoji
+  };
+  meals.push(newMeal);
+  saveMeals(meals);
+  closeModal();
+  renderAll();
+  showToast('✅ ' + name + ' ajouté !');
+
+  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
+  const subject = encodeURIComponent('[BOGOSS KITCHEN] Nouveau plat : ' + selectedEmoji + ' ' + name);
+  const body = encodeURIComponent(
+    'Nouveau plat ajouté sur BOGOSS KITCHEN !\n\n'
+    + selectedEmoji + ' ' + name + '\n'
+    + 'Catégorie : ' + catLabel + '\n\n'
+    + 'Pense à l\'ajouter dans le code du site pour que tout le monde y ait accès.'
+  );
+  window.location.href = 'mailto:TON_EMAIL@ici.com?subject=' + subject + '&body=' + body;
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeLucky(); }
+  if (e.key === 'Enter' && document.getElementById('modal').classList.contains('open')) saveNewMeal();
+});
+
+document.addEventListener('DOMContentLoaded', renderAll);
+</script>
+</body>
+</html>
