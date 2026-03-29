@@ -719,6 +719,7 @@ const DEFAULT_MEALS = [
   { id: 11, name: "Pâtes crème brocolis poulet ou saumon, carottes, tomate, onions", cat: "léger", emoji: "🍝" },
   { id: 12, name: "Ramen de porc croustillant (ou poulet)", cat: "léger", emoji: "🍜" },
   { id: 13, name: "Onions jeunes, bouillon, poulet", cat: "léger", emoji: "🍵" },
+  { id: 35, name: "Poké bowl", cat: "léger", emoji: "🥣" },
 
   // FLEMME
   { id: 14, name: "Pâtes haché et légumes", cat: "flemme", emoji: "🍝" },
@@ -896,7 +897,7 @@ function saveNewMeal() {
     + 'Catégorie : ' + catLabel + '\n\n'
     + 'Pense à l\'ajouter dans le code du site pour que tout le monde y ait accès.'
   );
-  window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+  window.location.href = 'mailto:TON_EMAIL@ici.com?subject=' + subject + '&body=' + body;
 }
 
 function showToast(msg) {
