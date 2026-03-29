@@ -103,6 +103,11 @@
   .tag.painquotidien { background: #1a1200; color: #f0b429; }
   .filter-btn[data-cat="painquotidien"].active { background: #f0b429; color: #000; }
   .cat-option[data-val="painquotidien"].selected { border-color: #f0b429; color: #f0b429; background: #1a1200; }
+  .boisson-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px; }
+  .boisson-opt { padding: 10px 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 10px; transition: all 0.18s; text-align: center; }
+  .boisson-opt.selected { border-color: var(--green); color: var(--green); background: rgba(6,193,103,0.1); }
+  .boisson-opt:hover { border-color: #555; color: #fff; }
+  .boisson-detail { margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -111,7 +116,7 @@
   <div class="top-row">
     <div>
       <div class="logo">BOGOSS<span> KITCHEN</span></div>
-      <div class="tagline">You pick, Ulrich makes it happen.</div>
+      <div class="tagline">You pick, I make it happen.</div>
     </div>
   </div>
   <div class="search-bar">
@@ -242,6 +247,18 @@
     <div style="font-size:40px;margin-bottom:8px" id="confirm-emoji"></div>
     <div class="modal-title" style="margin-bottom:4px" id="confirm-meal-name"></div>
     <div id="confirm-ingredients" style="font-size:13px;color:#888;line-height:1.6;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08)"></div>
+    <div class="form-group">
+      <label class="form-label">🥤 Boisson</label>
+      <div class="boisson-grid">
+        <button class="boisson-opt" data-boisson="Eau" onclick="selectBoisson(this)">💧 Eau</button>
+        <button class="boisson-opt" data-boisson="Soda" onclick="selectBoisson(this)">🥤 Soda</button>
+        <button class="boisson-opt" data-boisson="Bière" onclick="selectBoisson(this)">🍺 Bière</button>
+        <button class="boisson-opt" data-boisson="Vin" onclick="selectBoisson(this)">🍷 Vin</button>
+      </div>
+      <div class="boisson-detail" id="boisson-detail-wrap" style="display:none">
+        <input class="form-input" id="boisson-detail" type="text" placeholder="Précise..." style="margin-top:8px">
+      </div>
+    </div>
     <div class="form-group">
       <label class="form-label">Un commentaire ? (optionnel)</label>
       <input class="form-input" id="confirm-comment" type="text" placeholder="ex: sans oignons, avec du parmesan...">
@@ -622,6 +639,16 @@ document.addEventListener('keydown', e => {
 });
 
 let confirmMealId = null;
+let selectedBoisson = '';
+
+function selectBoisson(el) {
+  document.querySelectorAll('.boisson-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedBoisson = el.dataset.boisson;
+  const needsDetail = ['Soda', 'Bière', 'Vin'].includes(selectedBoisson);
+  document.getElementById('boisson-detail-wrap').style.display = needsDetail ? 'block' : 'none';
+  if (!needsDetail) document.getElementById('boisson-detail').value = '';
+}
 
 function openConfirm(id) {
   const meal = meals.find(m => m.id === id);
@@ -631,6 +658,10 @@ function openConfirm(id) {
   document.getElementById('confirm-meal-name').textContent = meal.name;
   document.getElementById('confirm-ingredients').textContent = meal.ingredients || '';
   document.getElementById('confirm-comment').value = '';
+  document.getElementById('boisson-detail').value = '';
+  document.getElementById('boisson-detail-wrap').style.display = 'none';
+  document.querySelectorAll('.boisson-opt').forEach(b => b.classList.remove('selected'));
+  selectedBoisson = '';
   document.getElementById('confirm-modal').classList.add('open');
   setTimeout(() => document.getElementById('confirm-comment').focus(), 100);
 }
@@ -652,11 +683,14 @@ function confirmMeal() {
   closeConfirm();
   showToast(meal.emoji + ' ' + meal.name + ' confirmé !');
   const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
+  const boissonDetail = document.getElementById('boisson-detail').value.trim();
+  const boissonFull = selectedBoisson ? (selectedBoisson + (boissonDetail ? ' — ' + boissonDetail : '')) : 'Non précisée';
   const body = encodeURIComponent(
     'Plat sélectionné ce soir :\n\n'
     + meal.emoji + ' ' + meal.name + '\n'
     + 'Catégorie : ' + catLabel + '\n'
-    + 'Ingrédients : ' + (meal.ingredients || 'N/A')
+    + 'Ingrédients : ' + (meal.ingredients || 'N/A') + '\n'
+    + 'Boisson : ' + boissonFull
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
   window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
