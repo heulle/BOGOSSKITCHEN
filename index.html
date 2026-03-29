@@ -99,6 +99,10 @@
   .meal-card.ubereats .card-img { background: #1a1000; }
   .cat-option[data-val="ubereats"].selected { border-color: #fa5252; color: #fa5252; background: #1a1000; }
   .filter-btn[data-cat="ubereats"].active { background: #fa5252; color: #fff; }
+  .meal-card.painquotidien .card-img { background: #1a1200; }
+  .tag.painquotidien { background: #1a1200; color: #f0b429; }
+  .filter-btn[data-cat="painquotidien"].active { background: #f0b429; color: #000; }
+  .cat-option[data-val="painquotidien"].selected { border-color: #f0b429; color: #f0b429; background: #1a1200; }
 </style>
 </head>
 <body>
@@ -107,7 +111,7 @@
   <div class="top-row">
     <div>
       <div class="logo">BOGOSS<span> KITCHEN</span></div>
-      <div class="tagline">You pick, I make it happen.</div>
+      <div class="tagline">You pick, Ulrich makes it happen.</div>
     </div>
   </div>
   <div class="search-bar">
@@ -120,6 +124,7 @@
     <button class="filter-btn" data-cat="flemme" onclick="setFilter('flemme', this)">🛋️ Flemme</button>
     <button class="filter-btn" data-cat="comfort" onclick="setFilter('comfort', this)">🫕 Comfort</button>
     <button class="filter-btn" data-cat="ubereats" onclick="setFilter('ubereats', this)">🛵 UberEats</button>
+    <button class="filter-btn" data-cat="painquotidien" onclick="setFilter('painquotidien', this)">🥐 Pain Quotidien</button>
   </div>
 </header>
 
@@ -163,6 +168,14 @@
     </div>
     <div class="meals-grid" id="grid-ubereats"></div>
   </div>
+  <div class="section" id="section-painquotidien">
+    <div class="section-header">
+      <div class="section-title">🥐 Pain Quotidien</div>
+      <div class="section-count" id="count-painquotidien"></div>
+      <div class="section-line"></div>
+    </div>
+    <div class="meals-grid" id="grid-painquotidien"></div>
+  </div>
 </main>
 
 <div class="bottom-bar">
@@ -184,6 +197,7 @@
         <button class="cat-option" data-val="flemme" onclick="selectCat('flemme')">🛋️ Flemme</button>
         <button class="cat-option" data-val="comfort" onclick="selectCat('comfort')">🫕 Comfort</button>
         <button class="cat-option" data-val="ubereats" onclick="selectCat('ubereats')">🛵 UberEats</button>
+        <button class="cat-option" data-val="painquotidien" onclick="selectCat('painquotidien')">🥐 Pain Quotidien</button>
       </div>
     </div>
     <div class="form-group">
@@ -336,7 +350,7 @@ const DEFAULT_MEALS = [
     ingredients: "Poulet rôti · Accompagnement du jour (compote, pain, pita ou durum)"
   },
   {
-    id: 24, name: "Saucisses Rôties", cat: "flemme", emoji: "🌭",
+    id: 24, name: "Saucisses libanaises", cat: "flemme", emoji: "🌭",
     ingredients: "Saucisses · Oignons · Tomates cerise · Poivrons · Basilic ou thym"
   },
   {
@@ -387,6 +401,40 @@ const DEFAULT_MEALS = [
     ingredients: "Je ne sais pas mais c'est délicieux ! (merci Rudy le boucher 🥩)"
   },
 
+  // PAIN QUOTIDIEN
+  { id: 41, name: "Corbeille de Pains Bio", cat: "painquotidien", emoji: "🧺",
+    ingredients: "Tous les pains maison · Beurre bio · Confitures bio · Pâtes à tartiner bio · Chocolat praliné belge" },
+  { id: 42, name: "Œuf à la Coque Bio", cat: "painquotidien", emoji: "🥚",
+    ingredients: "Œuf bio cuit à la perfection, jaune éclatant et blanc tendre · Baguette bio croustillante · Pain au levain bio" },
+  { id: 43, name: "Œufs Brouillés", cat: "painquotidien", emoji: "🍳",
+    ingredients: "Œufs bio onctueux, texture légère et crémeuse · Extras au choix : bacon grillé, avocat frais ou saumon fumé de l'Atlantique" },
+  { id: 44, name: "Bowl Petit-Déjeuner", cat: "painquotidien", emoji: "🥣",
+    ingredients: "Vitamines · Protéines · Graisses saines · Fibres — tout réuni dans un seul bol" },
+  { id: 45, name: "Mini Pancakes", cat: "painquotidien", emoji: "🥞",
+    ingredients: "Petites crêpes hollandaises · Fruits frais de saison" },
+  { id: 46, name: "Crêpes Sucrées", cat: "painquotidien", emoji: "🫓",
+    ingredients: "Légères et rassasiantes · Assortiment de garnitures sucrées · Fruits juteux et fraîcheur" },
+  { id: 47, name: "Tartine Avocat", cat: "painquotidien", emoji: "🥑",
+    ingredients: "Pain au levain biologique 2KG grillé · Purée d'avocat frais · Option : œufs brouillés bio ou saumon fumé de l'Atlantique" },
+  { id: 48, name: "Tartare de Bœuf Belge", cat: "painquotidien", emoji: "🥩",
+    ingredients: "Tartare de bœuf belge bio assaisonné · Copeaux de parmesan · Huile de basilic · Tomates séchées bio — classique depuis 1990 !" },
+  { id: 49, name: "Saumon Fumé Atlantique", cat: "painquotidien", emoji: "🐟",
+    ingredients: "Saumon atlantique fumé · Skyr bio aux herbes fraîches · Ciboulette · Citron · Jeunes pousses" },
+  { id: 50, name: "Poulet & Mozzarella Fumée", cat: "painquotidien", emoji: "🍗",
+    ingredients: "Poulet tendre · Mozzarella fumée · Pain au levain biologique" },
+  { id: 51, name: "Tartine Thon", cat: "painquotidien", emoji: "🐟",
+    ingredients: "Thon · Richesse crémeuse · Texture croquante · Herbes parfumées" },
+  { id: 52, name: "Croque Monsieur LPQ", cat: "painquotidien", emoji: "🥪",
+    ingredients: "Pain de blé au levain biologique · Jambon de ferme belge · Gouda fondant" },
+  { id: 53, name: "Flatbread Végétarien", cat: "painquotidien", emoji: "🫓",
+    ingredients: "Houmous · Poivrons rôtis · Courgettes grillées · Jeunes pousses · Huile de basilic" },
+  { id: 54, name: "Soupe du Jour", cat: "painquotidien", emoji: "🍵",
+    ingredients: "Soupe vegan et bio · Légumes de saison · Herbes fraîches · Pain au levain bio" },
+  { id: 55, name: "Quiche Maison", cat: "painquotidien", emoji: "🥧",
+    ingredients: "Au choix : Lorraine · Feta & épinards · Saumon & poireaux" },
+  { id: 56, name: "Combo Soupe & Tartine", cat: "painquotidien", emoji: "🍲",
+    ingredients: "Bol de soupe vegan · Demi-tartine du jour · Salade fraîche" },
+
   // UBEREATS
   {
     id: 36, name: "Frites", cat: "ubereats", emoji: "🍟",
@@ -431,7 +479,7 @@ function getQuery() {
 
 function renderAll() {
   const q = getQuery();
-  ['léger','flemme','comfort','ubereats'].forEach(cat => {
+  ['léger','flemme','comfort','ubereats','painquotidien'].forEach(cat => {
     const catId = cat === 'léger' ? 'leger' : cat;
     let filtered = meals.filter(m => m.cat === cat);
     if (currentFilter !== 'all' && currentFilter !== cat) filtered = [];
@@ -459,7 +507,7 @@ function renderAll() {
         <div class="card-img">${m.emoji}</div>
         <div class="card-body">
           <div class="meal-name-card">${m.name}</div>
-          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : m.cat === 'ubereats' ? '🛵 UberEats' : '🫕 Comfort'}</span></div>
+          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : m.cat === 'ubereats' ? '🛵 UberEats' : m.cat === 'painquotidien' ? '🥐 Pain Quotidien' : '🫕 Comfort'}</span></div>
         </div>
       </div>
     `).join('');
@@ -541,7 +589,7 @@ function saveNewMeal() {
   renderAll();
   showToast('✅ ' + name + ' ajouté !');
 
-  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : selectedCat === 'ubereats' ? '🛵 UberEats' : '🫕 Comfort Food';
+  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : selectedCat === 'ubereats' ? '🛵 UberEats' : selectedCat === 'painquotidien' ? '🥐 Pain Quotidien' : '🫕 Comfort Food';
 
   if (selectedCat === 'ubereats') {
     const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
