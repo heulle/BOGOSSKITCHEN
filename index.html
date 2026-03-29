@@ -4,607 +4,120 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOGOSS KITCHEN</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #0f0e0c;
-    --surface: #1a1915;
-    --surface2: #22211d;
-    --accent: #e8c547;
-    --accent2: #e07a3b;
-    --light: #f5f0e8;
-    --muted: #7a7670;
-    --leger: #5fa87a;
-    --flemme: #e07a3b;
-    --comfort: #c44f3b;
-    --border: rgba(232,197,71,0.15);
+    --bg: #000; --surface: #1a1a1a; --surface2: #242424;
+    --green: #06c167; --green-dark: #054d28;
+    --leger-bg: #0d2414; --leger-text: #06c167;
+    --flemme-bg: #221400; --flemme-text: #f59300;
+    --comfort-bg: #220a0a; --comfort-text: #f04438;
+    --text: #fff; --muted: #666; --border: rgba(255,255,255,0.08);
   }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--light);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* HEADER */
-  header {
-    position: relative;
-    padding: 60px 40px 40px;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, #141310 0%, transparent 100%);
-    overflow: hidden;
-  }
-
-  header::before {
-    content: 'BK';
-    position: absolute;
-    right: -20px;
-    top: -30px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 260px;
-    color: rgba(232,197,71,0.04);
-    pointer-events: none;
-    line-height: 1;
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 8vw, 100px);
-    letter-spacing: 0.04em;
-    line-height: 0.9;
-    position: relative;
-  }
-
-  .logo span {
-    color: var(--accent);
-    display: block;
-  }
-
-  .tagline {
-    margin-top: 16px;
-    color: var(--muted);
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-
-  /* CONTROLS */
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 30px 40px;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(15,14,12,0.95);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-  }
-
-  .roll-btn {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 0.1em;
-    background: var(--accent);
-    color: #0f0e0c;
-    border: none;
-    padding: 12px 32px;
-    cursor: pointer;
-    transition: all 0.2s;
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  }
-
-  .roll-btn:hover {
-    background: var(--accent2);
-    transform: scale(1.03);
-  }
-
-  .filter-btns {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .filter-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 8px 18px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 2px;
-  }
-
-  .filter-btn:hover, .filter-btn.active {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .filter-btn[data-cat="léger"].active { border-color: var(--leger); color: var(--leger); }
-  .filter-btn[data-cat="flemme"].active { border-color: var(--flemme); color: var(--flemme); }
-  .filter-btn[data-cat="comfort"].active { border-color: var(--comfort); color: var(--comfort); }
-
-  .search-wrap {
-    margin-left: auto;
-    position: relative;
-  }
-
-  .search-input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--light);
-    padding: 9px 16px 9px 36px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    width: 200px;
-    outline: none;
-    border-radius: 2px;
-    transition: border-color 0.2s;
-  }
-
-  .search-input:focus { border-color: var(--accent); }
-  .search-input::placeholder { color: var(--muted); }
-
-  .search-icon {
-    position: absolute;
-    left: 11px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 14px;
-    pointer-events: none;
-  }
-
-  /* LUCKY PICK BANNER */
-  #lucky-banner {
-    display: none;
-    margin: 24px 40px;
-    padding: 24px 32px;
-    background: var(--surface2);
-    border-left: 4px solid var(--accent);
-    animation: slideIn 0.3s ease;
-    position: relative;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  #lucky-banner .label {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  #lucky-banner .meal-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    letter-spacing: 0.05em;
-    line-height: 1;
-  }
-
-  #lucky-banner .meal-cat {
-    margin-top: 6px;
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  #lucky-banner .close-lucky {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 18px;
-    line-height: 1;
-    transition: color 0.2s;
-  }
-
-  #lucky-banner .close-lucky:hover { color: var(--light); }
-
-  /* MAIN GRID */
-  main {
-    padding: 32px 40px 80px;
-  }
-
-  .section {
-    margin-bottom: 56px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 0.08em;
-  }
-
-  .section-title.leger { color: var(--leger); }
-  .section-title.flemme { color: var(--flemme); }
-  .section-title.comfort { color: var(--comfort); }
-
-  .section-count {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .meals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-  }
-
-  .meal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 16px 18px;
-    cursor: pointer;
-    transition: all 0.18s;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border-radius: 3px;
-    animation: cardIn 0.3s ease both;
-  }
-
-  @keyframes cardIn {
-    from { opacity: 0; transform: scale(0.97); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .meal-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: transparent;
-    transition: background 0.2s;
-  }
-
-  .meal-card.leger::before { background: var(--leger); }
-  .meal-card.flemme::before { background: var(--flemme); }
-  .meal-card.comfort::before { background: var(--comfort); }
-
-  .meal-card { cursor: pointer; }
-  .meal-card:hover {
-    background: var(--surface2);
-    border-color: rgba(232,197,71,0.3);
-    transform: translateY(-2px);
-  }
-
-  .meal-card:hover .meal-emoji { transform: scale(1.15); }
-
-  .meal-emoji {
-    font-size: 22px;
-    transition: transform 0.2s;
-    line-height: 1;
-  }
-
-  .meal-name-card {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.35;
-    color: var(--light);
-    text-transform: capitalize;
-  }
-
-  .meal-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 2px;
-  }
-
-  .tag {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2px 7px;
-    border-radius: 1px;
-    font-weight: 500;
-  }
-
-  .tag.leger { background: rgba(95,168,122,0.15); color: var(--leger); }
-  .tag.flemme { background: rgba(224,122,59,0.15); color: var(--flemme); }
-  .tag.comfort { background: rgba(196,79,59,0.15); color: var(--comfort); }
-
-  .delete-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: transparent;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 1;
-    transition: color 0.15s;
-    padding: 2px;
-  }
-
-  .meal-card:hover .delete-btn { color: var(--muted); }
-  .delete-btn:hover { color: var(--comfort) !important; }
-
-  /* ADD MEAL */
-  .add-section {
-    position: fixed;
-    bottom: 32px;
-    right: 40px;
-    z-index: 200;
-  }
-
-  .add-btn {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.12em;
-    background: var(--accent);
-    color: #0f0e0c;
-    border: none;
-    padding: 14px 28px;
-    cursor: pointer;
-    transition: all 0.2s;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    box-shadow: 0 8px 32px rgba(232,197,71,0.3);
-  }
-
-  .add-btn:hover {
-    background: var(--accent2);
-    transform: scale(1.05);
-    box-shadow: 0 12px 40px rgba(224,122,59,0.4);
-  }
-
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(10,9,8,0.85);
-    backdrop-filter: blur(6px);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 40px;
-    width: min(480px, 90vw);
-    border-top: 3px solid var(--accent);
-    animation: modalIn 0.25s ease;
-  }
-
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .modal-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
-    letter-spacing: 0.08em;
-    margin-bottom: 28px;
-  }
-
-  .modal-title span { color: var(--accent); }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  .form-input {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--light);
-    padding: 12px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    outline: none;
-    border-radius: 2px;
-    transition: border-color 0.2s;
-  }
-
-  .form-input:focus { border-color: var(--accent); }
-  .form-input::placeholder { color: var(--muted); }
-
-  .cat-selector {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .cat-option {
-    padding: 10px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    border-radius: 2px;
-    transition: all 0.18s;
-    text-align: center;
-  }
-
-  .cat-option[data-val="léger"]:hover,
-  .cat-option[data-val="léger"].selected { border-color: var(--leger); color: var(--leger); background: rgba(95,168,122,0.1); }
-  .cat-option[data-val="flemme"]:hover,
-  .cat-option[data-val="flemme"].selected { border-color: var(--flemme); color: var(--flemme); background: rgba(224,122,59,0.1); }
-  .cat-option[data-val="comfort"]:hover,
-  .cat-option[data-val="comfort"].selected { border-color: var(--comfort); color: var(--comfort); background: rgba(196,79,59,0.1); }
-
-  .emoji-picker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .emoji-opt {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 2px;
-    transition: all 0.15s;
-  }
-
-  .emoji-opt:hover, .emoji-opt.selected { border-color: var(--accent); background: rgba(232,197,71,0.08); }
-
-  .modal-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 32px;
-  }
-
-  .btn-save {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.1em;
-    background: var(--accent);
-    color: #0f0e0c;
-    border: none;
-    padding: 12px 32px;
-    cursor: pointer;
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-    flex: 1;
-    transition: background 0.2s;
-  }
-
-  .btn-save:hover { background: var(--accent2); }
-
-  .btn-cancel {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 12px 24px;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.2s;
-  }
-
-  .btn-cancel:hover { border-color: var(--muted); color: var(--light); }
-
-  /* EMPTY */
-  .empty-msg {
-    color: var(--muted);
-    font-size: 13px;
-    font-style: italic;
-    padding: 20px 0;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  header { background: #000; padding: 28px 20px 0; position: sticky; top: 0; z-index: 100; }
+  .top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  .logo span { color: var(--green); }
+  .tagline { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .search-bar { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; }
+  .search-icon { font-size: 14px; color: var(--muted); }
+  #search { background: none; border: none; outline: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; flex: 1; }
+  #search::placeholder { color: var(--muted); }
+  .cats { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: none; }
+  .cats::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 100px; border: none; cursor: pointer; background: var(--surface); color: var(--muted); transition: all 0.18s; font-family: 'Inter', sans-serif; }
+  .filter-btn.active { background: #fff; color: #000; }
+  .filter-btn[data-cat="léger"].active { background: var(--leger-text); color: #000; }
+  .filter-btn[data-cat="flemme"].active { background: var(--flemme-text); color: #000; }
+  .filter-btn[data-cat="comfort"].active { background: var(--comfort-text); color: #fff; }
+  #lucky-banner { display: none; margin: 16px 20px; padding: 20px; background: var(--surface); border-radius: 16px; border-left: 4px solid var(--green); position: relative; animation: slideIn 0.3s ease; }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+  #lucky-banner .label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 6px; }
+  #lucky-banner .meal-name { font-size: 22px; font-weight: 800; }
+  #lucky-banner .meal-cat { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  #lucky-banner .close-lucky { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; }
+  main { padding: 16px 20px 120px; }
+  .section { margin-bottom: 36px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .section-title { font-size: 18px; font-weight: 800; }
+  .section-count { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
   .hidden { display: none !important; }
-
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 100px;
-    right: 40px;
-    background: var(--surface2);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: 12px 20px;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    z-index: 9999;
-    animation: toastIn 0.2s ease;
-    border-radius: 2px;
-  }
-
-  @keyframes toastIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 600px) {
-    header, main, .controls { padding-left: 20px; padding-right: 20px; }
-    #lucky-banner { margin-left: 20px; margin-right: 20px; }
-    .add-section { right: 20px; bottom: 20px; }
-  }
+  .meals-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .meal-card { background: var(--surface); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.15s, background 0.15s; position: relative; animation: cardIn 0.3s ease both; }
+  @keyframes cardIn { from { opacity:0; transform:scale(0.97); } to { opacity:1; transform:scale(1); } }
+  .meal-card:hover { background: var(--surface2); transform: scale(1.02); }
+  .card-img { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 44px; }
+  .meal-card.léger .card-img { background: var(--leger-bg); }
+  .meal-card.flemme .card-img { background: var(--flemme-bg); }
+  .meal-card.comfort .card-img { background: var(--comfort-bg); }
+  .card-body { padding: 10px 12px 12px; }
+  .meal-name-card { font-size: 13px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; color: var(--text); }
+  .meal-tags { display: flex; gap: 6px; align-items: center; }
+  .tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+  .tag.léger { background: var(--leger-bg); color: var(--leger-text); }
+  .tag.flemme { background: var(--flemme-bg); color: var(--flemme-text); }
+  .tag.comfort { background: var(--comfort-bg); color: var(--comfort-text); }
+  .delete-btn { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); border: none; color: transparent; cursor: pointer; font-size: 12px; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; transition: color 0.15s; }
+  .meal-card:hover .delete-btn { color: #fff; }
+  .delete-btn:hover { color: var(--comfort-text) !important; }
+  .empty-msg { color: var(--muted); font-size: 13px; font-style: italic; padding: 16px 0; }
+  .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid var(--border); padding: 12px 20px 24px; display: flex; gap: 10px; z-index: 200; }
+  .inspire-btn { flex: 1; background: var(--green); color: #000; border: none; border-radius: 14px; padding: 16px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.18s; }
+  .inspire-btn:hover { opacity: 0.88; }
+  .add-btn { background: var(--surface2); color: var(--text); border: none; border-radius: 14px; padding: 16px 20px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.18s; white-space: nowrap; }
+  .add-btn:hover { background: #333; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: flex-end; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 20px 20px 0 0; padding: 28px 24px 36px; width: 100%; max-width: 520px; animation: modalUp 0.25s ease; max-height: 90vh; overflow-y: auto; }
+  @keyframes modalUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 24px; }
+  .modal-title span { color: var(--green); }
+  .form-group { margin-bottom: 18px; }
+  .form-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .form-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 16px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; border-radius: 10px; transition: border-color 0.2s; }
+  .form-input:focus { border-color: var(--green); }
+  .form-input::placeholder { color: var(--muted); }
+  .cat-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cat-option { padding: 10px 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 10px; transition: all 0.18s; text-align: center; }
+  .cat-option[data-val="léger"].selected { border-color: var(--leger-text); color: var(--leger-text); background: var(--leger-bg); }
+  .cat-option[data-val="flemme"].selected { border-color: var(--flemme-text); color: var(--flemme-text); background: var(--flemme-bg); }
+  .cat-option[data-val="comfort"].selected { border-color: var(--comfort-text); color: var(--comfort-text); background: var(--comfort-bg); }
+  .cat-option:hover { border-color: #555; color: #fff; }
+  .emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+  .emoji-opt { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: var(--bg); border: 1px solid var(--border); cursor: pointer; font-size: 18px; border-radius: 8px; transition: all 0.15s; }
+  .emoji-opt.selected { border-color: var(--green); background: rgba(6,193,103,0.1); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+  .btn-save { flex: 1; background: var(--green); color: #000; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .btn-cancel { background: var(--surface2); color: var(--muted); border: none; border-radius: 14px; padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 12px 20px; font-size: 13px; font-weight: 600; z-index: 9999; animation: toastIn 0.2s ease; border-radius: 100px; white-space: nowrap; }
+  @keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+  @media (min-width: 600px) { header, main { padding-left: 40px; padding-right: 40px; } .meals-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } .bottom-bar { padding-left: 40px; padding-right: 40px; } }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">BOGOSS<span>KITCHEN</span></div>
-  <div class="tagline">🍳 Welcome to BOGOSS KITCHEN.</div>
-</header>
-
-<div class="controls">
-  <button class="roll-btn" onclick="rollDice()">🎲 INSPIRE-MOI</button>
-  <div class="filter-btns">
+  <div class="top-row">
+    <div>
+      <div class="logo">BOGOSS<span> KITCHEN</span></div>
+      <div class="tagline">Décide ce soir. Sans te prendre la tête.</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="Rechercher un plat..." oninput="renderAll()">
+  </div>
+  <div class="cats">
     <button class="filter-btn active" data-cat="all" onclick="setFilter('all', this)">Tout</button>
     <button class="filter-btn" data-cat="léger" onclick="setFilter('léger', this)">🥗 Léger</button>
     <button class="filter-btn" data-cat="flemme" onclick="setFilter('flemme', this)">🛋️ Flemme</button>
     <button class="filter-btn" data-cat="comfort" onclick="setFilter('comfort', this)">🫕 Comfort</button>
   </div>
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input class="search-input" type="text" id="search" placeholder="Chercher un plat..." oninput="renderAll()">
-  </div>
-</div>
+</header>
 
 <div id="lucky-banner">
   <button class="close-lucky" onclick="closeLucky()">✕</button>
@@ -616,52 +129,42 @@
 <main>
   <div class="section" id="section-leger">
     <div class="section-header">
-      <div>
-        <div class="section-title leger">🥗 LÉGER</div>
-        <div class="section-count" id="count-leger"></div>
-      </div>
+      <div class="section-title">🥗 Léger</div>
+      <div class="section-count" id="count-leger"></div>
       <div class="section-line"></div>
     </div>
     <div class="meals-grid" id="grid-leger"></div>
   </div>
-
   <div class="section" id="section-flemme">
     <div class="section-header">
-      <div>
-        <div class="section-title flemme">🛋️ FLEMME</div>
-        <div class="section-count" id="count-flemme"></div>
-      </div>
+      <div class="section-title">🛋️ Flemme</div>
+      <div class="section-count" id="count-flemme"></div>
       <div class="section-line"></div>
     </div>
     <div class="meals-grid" id="grid-flemme"></div>
   </div>
-
   <div class="section" id="section-comfort">
     <div class="section-header">
-      <div>
-        <div class="section-title comfort">🫕 COMFORT FOOD</div>
-        <div class="section-count" id="count-comfort"></div>
-      </div>
+      <div class="section-title">🫕 Comfort food</div>
+      <div class="section-count" id="count-comfort"></div>
       <div class="section-line"></div>
     </div>
     <div class="meals-grid" id="grid-comfort"></div>
   </div>
 </main>
 
-<div class="add-section">
-  <button class="add-btn" onclick="openModal()">+ AJOUTER UN PLAT</button>
+<div class="bottom-bar">
+  <button class="inspire-btn" onclick="openModal()">+ Proposer un plat</button>
 </div>
 
-<!-- MODAL -->
+<!-- ADD MODAL -->
 <div class="modal-overlay" id="modal" onclick="maybeClose(event)">
   <div class="modal">
-    <div class="modal-title">NOUVEAU <span>PLAT</span></div>
-
+    <div class="modal-title">Nouveau <span>plat</span></div>
     <div class="form-group">
       <label class="form-label">Nom du plat</label>
       <input class="form-input" id="input-name" type="text" placeholder="ex: Pâtes carbonara...">
     </div>
-
     <div class="form-group">
       <label class="form-label">Catégorie</label>
       <div class="cat-selector">
@@ -670,11 +173,10 @@
         <button class="cat-option" data-val="comfort" onclick="selectCat('comfort')">🫕 Comfort</button>
       </div>
     </div>
-
     <div class="form-group">
       <label class="form-label">Emoji</label>
       <div class="emoji-picker" id="emoji-picker">
-        <span class="emoji-opt" onclick="selectEmoji(this)">🍝</span>
+        <span class="emoji-opt selected" onclick="selectEmoji(this)">🍝</span>
         <span class="emoji-opt" onclick="selectEmoji(this)">🥗</span>
         <span class="emoji-opt" onclick="selectEmoji(this)">🍕</span>
         <span class="emoji-opt" onclick="selectEmoji(this)">🍔</span>
@@ -693,17 +195,31 @@
         <span class="emoji-opt" onclick="selectEmoji(this)">🥘</span>
         <span class="emoji-opt" onclick="selectEmoji(this)">🫔</span>
         <span class="emoji-opt" onclick="selectEmoji(this)">🍞</span>
-        <span class="emoji-opt" onclick="selectEmoji(this)">🐟</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)">🥣</span>
       </div>
     </div>
-
     <div class="modal-actions">
-      <button class="btn-save" onclick="saveNewMeal()">AJOUTER</button>
+      <button class="btn-save" onclick="saveNewMeal()">Ajouter</button>
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
     </div>
   </div>
 </div>
 
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal" onclick="maybeCloseConfirm(event)">
+  <div class="modal">
+    <div class="modal-title">Ce soir c'est <span id="confirm-emoji"></span></div>
+    <div id="confirm-meal-name" style="font-size:17px;font-weight:600;margin-bottom:24px;line-height:1.35;color:#fff"></div>
+    <div class="form-group">
+      <label class="form-label">Un commentaire ? (optionnel)</label>
+      <input class="form-input" id="confirm-comment" type="text" placeholder="ex: sans oignons, avec du parmesan...">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" onclick="confirmMeal()">Confirmer</button>
+      <button class="btn-cancel" onclick="closeConfirm()">Annuler</button>
+    </div>
+  </div>
+</div>
 <script>
 const DEFAULT_MEALS = [
   // LÉGER
@@ -797,10 +313,12 @@ function renderAll() {
     }
 
     grid.innerHTML = filtered.map(m => `
-      <div class="meal-card ${m.cat}" style="animation-delay:${Math.random()*0.1}s" onclick="openConfirm(${m.id})">
-        <span class="meal-emoji">${m.emoji}</span>
-        <div class="meal-name-card">${m.name}</div>
-        <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort'}</span></div>
+      <div class="meal-card ${m.cat}" style="animation-delay:${Math.random()*0.08}s" onclick="openConfirm(${m.id})">
+        <div class="card-img">${m.emoji}</div>
+        <div class="card-body">
+          <div class="meal-name-card">${m.name}</div>
+          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort'}</span></div>
+        </div>
         <button class="delete-btn" onclick="deleteMeal(${m.id}, event)" title="Supprimer">✕</button>
       </div>
     `).join('');
@@ -891,14 +409,13 @@ function saveNewMeal() {
   showToast('✅ ' + name + ' ajouté !');
 
   const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
-  const subject = encodeURIComponent('[BOGOSS KITCHEN] Nouveau plat : ' + selectedEmoji + ' ' + name);
+  const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
   const body = encodeURIComponent(
-    'Nouveau plat ajouté sur BOGOSS KITCHEN !\n\n'
+    'Nouveau plat proposé sur BOGOSS KITCHEN !\n\n'
     + selectedEmoji + ' ' + name + '\n'
-    + 'Catégorie : ' + catLabel + '\n\n'
-    + 'Pense à l\'ajouter dans le code du site pour que tout le monde y ait accès.'
+    + 'Catégorie : ' + catLabel
   );
-  window.location.href = 'mailto:uheulle@gmail.com ?subject= BOGOSS KITCHEN' + subject + '&body=' + body;
+  window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 function showToast(msg) {
@@ -942,36 +459,19 @@ function confirmMeal() {
   if (!meal) return;
   const comment = document.getElementById('confirm-comment').value.trim();
   const catLabel = meal.cat === 'léger' ? '🥗 Léger' : meal.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
-  const subject = encodeURIComponent('[BOGOSS KITCHEN] Ce soir : ' + meal.emoji + ' ' + meal.name);
+  closeConfirm();
+  showToast(meal.emoji + ' ' + meal.name + ' confirmé !');
+  const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
   const body = encodeURIComponent(
     'Plat sélectionné ce soir :\n\n'
     + meal.emoji + ' ' + meal.name + '\n'
     + 'Catégorie : ' + catLabel
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
-  closeConfirm();
-  showToast(meal.emoji + ' ' + meal.name + ' confirmé !');
-  window.location.href = 'mailto:uheulle@gmail.com?subject= BOGOSS KITCHEN' + subject + '&body=' + body;
+  window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 document.addEventListener('DOMContentLoaded', renderAll);
 </script>
-<!-- CONFIRM MODAL -->
-<div class="modal-overlay" id="confirm-modal" onclick="maybeCloseConfirm(event)">
-  <div class="modal">
-    <div class="modal-title">CE SOIR C'EST <span id="confirm-emoji"></span></div>
-    <div id="confirm-meal-name" style="font-size:18px;font-weight:500;margin-bottom:24px;line-height:1.3;color:var(--light)"></div>
-
-    <div class="form-group">
-      <label class="form-label">Un commentaire ? (optionnel)</label>
-      <input class="form-input" id="confirm-comment" type="text" placeholder="ex: sans oignons, avec du parmesan...">
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-save" onclick="confirmMeal()">✅ CONFIRMER</button>
-      <button class="btn-cancel" onclick="closeConfirm()">Annuler</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
