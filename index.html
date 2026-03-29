@@ -541,17 +541,11 @@ function saveNewMeal() {
   if (selectedCat === 'ubereats') {
     const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
     const body = encodeURIComponent('Commande UberEats ce soir :\n\n' + selectedEmoji + ' ' + name);
-    const a = document.createElement('a');
-    a.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
-    a.click();
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
   } else {
     const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
     const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel);
-    createGithubPR(newMeal).then(() => {
-      const a = document.createElement('a');
-      a.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
-      a.click();
-    });
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
   }
 }
 
@@ -607,75 +601,6 @@ function confirmMeal() {
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
   window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
-}
-
-function setGithubToken(t) {
-  localStorage.setItem('bk_gh_token', t.trim());
-  showToast('Token GitHub enregistré !');
-}
-
-const GITHUB_REPO = 'heulle/BOGOSSKITCHEN';
-const GITHUB_FILE = 'index.html';
-const GITHUB_TOKEN = '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';
-
-async function createGithubPR(meal) {
-  const token = localStorage.getItem('bk_gh_token');
-  if (!token) return;
-  try {
-    const headers = {
-      'Authorization': 'token ' + token,
-      'Content-Type': 'application/json',
-      'Accept': 'application/vnd.github.v3+json'
-    };
-
-    // Get current file SHA + content
-    const fileRes = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, { headers });
-    const fileData = await fileRes.json();
-    const sha = fileData.sha;
-    const decoded = atob(fileData.content.replace(/\n/g, ''));
-
-    // Insert new meal into DEFAULT_MEALS
-    const marker = '  { id: 35,';
-    const newLine = '  { id: ' + meal.id + ', name: "' + meal.name + '", cat: "' + meal.cat + '", emoji: "' + meal.emoji + '" },\n';
-    const updated = decoded.replace(marker, newLine + marker);
-
-    // Create branch
-    const mainRes = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/git/ref/heads/main', { headers });
-    const mainData = await mainRes.json();
-    const sha_main = mainData.object.sha;
-    const branch = 'new-plat-' + meal.id;
-
-    await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/git/refs', {
-      method: 'POST', headers,
-      body: JSON.stringify({ ref: 'refs/heads/' + branch, sha: sha_main })
-    });
-
-    // Push updated file
-    await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
-      method: 'PUT', headers,
-      body: JSON.stringify({
-        message: 'Nouveau plat : ' + meal.emoji + ' ' + meal.name,
-        content: btoa(unescape(encodeURIComponent(updated))),
-        sha: sha,
-        branch: branch
-      })
-    });
-
-    // Create PR
-    await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/pulls', {
-      method: 'POST', headers,
-      body: JSON.stringify({
-        title: 'Nouveau plat : ' + meal.emoji + ' ' + meal.name,
-        head: branch,
-        base: 'main',
-        body: 'Catégorie : ' + meal.cat + '\n\nAjouté depuis BOGOSS KITCHEN.'
-      })
-    });
-
-    showToast('PR créée sur GitHub !');
-  } catch(e) {
-    console.error('GitHub PR error:', e);
-  }
 }
 
 document.addEventListener('DOMContentLoaded', renderAll);
