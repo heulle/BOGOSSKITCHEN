@@ -541,12 +541,17 @@ function saveNewMeal() {
   if (selectedCat === 'ubereats') {
     const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
     const body = encodeURIComponent('Commande UberEats ce soir :\n\n' + selectedEmoji + ' ' + name);
-    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+    const a = document.createElement('a');
+    a.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+    a.click();
   } else {
     const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
     const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel);
-    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
-    createGithubPR(newMeal);
+    createGithubPR(newMeal).then(() => {
+      const a = document.createElement('a');
+      a.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+      a.click();
+    });
   }
 }
 
