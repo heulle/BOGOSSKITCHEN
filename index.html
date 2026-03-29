@@ -225,6 +225,10 @@
         <span class="emoji-opt" onclick="selectEmoji(this)">🥣</span>
       </div>
     </div>
+    <div class="form-group">
+      <label class="form-label">Ingrédients (optionnel)</label>
+      <input class="form-input" id="input-ingredients" type="text" placeholder="ex: pâtes, lardons, parmesan...">
+    </div>
     <div class="modal-actions">
       <button class="btn-save" onclick="saveNewMeal()">Proposer</button>
       <button class="btn-cancel" onclick="closeModal()">Annuler</button>
@@ -350,7 +354,7 @@ const DEFAULT_MEALS = [
     ingredients: "Poulet rôti · Accompagnement du jour (compote, pain, pita ou durum)"
   },
   {
-    id: 24, name: "Saucisses libanaises", cat: "flemme", emoji: "🌭",
+    id: 24, name: "Saucisses Rôties", cat: "flemme", emoji: "🌭",
     ingredients: "Saucisses · Oignons · Tomates cerise · Poivrons · Basilic ou thym"
   },
   {
@@ -597,7 +601,8 @@ function saveNewMeal() {
     window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
   } else {
     const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
-    const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel);
+    const ingredients = document.getElementById('input-ingredients') ? document.getElementById('input-ingredients').value.trim() : '';
+    const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel + (ingredients ? '\nIngrédients : ' + ingredients : ''));
     window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
   }
 }
@@ -650,7 +655,8 @@ function confirmMeal() {
   const body = encodeURIComponent(
     'Plat sélectionné ce soir :\n\n'
     + meal.emoji + ' ' + meal.name + '\n'
-    + 'Catégorie : ' + catLabel
+    + 'Catégorie : ' + catLabel + '\n'
+    + 'Ingrédients : ' + (meal.ingredients || 'N/A')
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
   window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
