@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -194,7 +193,6 @@
 </div>
 
 <!-- ADD MODAL -->
-
 <div class="modal-overlay" id="modal" onclick="maybeClose(event)">
   <div class="modal">
     <div class="modal-title">Nouveau <span>plat</span></div>
@@ -249,7 +247,6 @@
 </div>
 
 <!-- CONFIRM MODAL -->
-
 <div class="modal-overlay" id="confirm-modal" onclick="maybeCloseConfirm(event)">
   <div class="modal">
     <div style="font-size:40px;margin-bottom:8px" id="confirm-emoji"></div>
@@ -337,377 +334,374 @@ const DEFAULT_MEALS = [
     ingredients: "Base salade · Poulet · Légumes de saison · Sauce maison"
   },
 
-// FLEMME
-{
-id: 14, name: “Pâtes du Soir”, cat: “flemme”, emoji: “🍝”,
-ingredients: “Pâtes · Viande hachée · Carottes · Oignons · Tomates · Roquette”
-},
-{
-id: 15, name: “Pâtes Jambon”, cat: “flemme”, emoji: “🍝”,
-ingredients: “Pâtes · Jambon · Fromage fondu”
-},
-{
-id: 16, name: “Pâtes au Poivre”, cat: “flemme”, emoji: “🍝”,
-ingredients: “Pâtes · Sauce poivre · Crème · Fromage râpé”
-},
-{
-id: 17, name: “Saucisse & Compote”, cat: “flemme”, emoji: “🌭”,
-ingredients: “Saucisses de poulet ou veau · Compote maison”
-},
-{
-id: 18, name: “Hot Dog Maison”, cat: “flemme”, emoji: “🌭”,
-ingredients: “Pain hot dog · Saucisse · Sauce au choix”
-},
-{
-id: 19, name: “Croque Monsieur”, cat: “flemme”, emoji: “🥪”,
-ingredients: “Pain de mie ou pain céréales · Jambon · Fromage fondu”
-},
-{
-id: 20, name: “Cordon Bleu & Riz”, cat: “flemme”, emoji: “🍚”,
-ingredients: “Cordon bleu doré · Riz blanc”
-},
-{
-id: 21, name: “Durum Maison”, cat: “flemme”, emoji: “🌯”,
-ingredients: “Wrap ou durum · Garniture du jour”
-},
-{
-id: 22, name: “Pita Frites”, cat: “flemme”, emoji: “🥙”,
-ingredients: “Pita chaude · Frites · Garniture du jour”
-},
-{
-id: 23, name: “Poulet Rôti”, cat: “flemme”, emoji: “🍗”,
-ingredients: “Poulet rôti · Accompagnement du jour (compote, pain, pita ou durum)”
-},
-{
-id: 24, name: “Saucisses à la Liban”, cat: “flemme”, emoji: “🌭”,
-ingredients: “Saucisses · Oignons · Tomates cerise · Poivrons · Basilic ou thym”
-},
-{
-id: 25, name: “Couque César”, cat: “flemme”, emoji: “🥖”,
-ingredients: “Couque · Poulet · Tomate · Salade · Dressing César”
-},
+  // FLEMME
+  {
+    id: 14, name: "Pâtes du Soir", cat: "flemme", emoji: "🍝",
+    ingredients: "Pâtes · Viande hachée · Carottes · Oignons · Tomates · Roquette"
+  },
+  {
+    id: 15, name: "Pâtes Jambon", cat: "flemme", emoji: "🍝",
+    ingredients: "Pâtes · Jambon · Fromage fondu"
+  },
+  {
+    id: 16, name: "Pâtes au Poivre", cat: "flemme", emoji: "🍝",
+    ingredients: "Pâtes · Sauce poivre · Crème · Fromage râpé"
+  },
+  {
+    id: 17, name: "Saucisse & Compote", cat: "flemme", emoji: "🌭",
+    ingredients: "Saucisses de poulet ou veau · Compote maison"
+  },
+  {
+    id: 18, name: "Hot Dog Maison", cat: "flemme", emoji: "🌭",
+    ingredients: "Pain hot dog · Saucisse · Sauce au choix"
+  },
+  {
+    id: 19, name: "Croque Monsieur", cat: "flemme", emoji: "🥪",
+    ingredients: "Pain de mie ou pain céréales · Jambon · Fromage fondu"
+  },
+  {
+    id: 20, name: "Cordon Bleu & Riz", cat: "flemme", emoji: "🍚",
+    ingredients: "Cordon bleu doré · Riz blanc"
+  },
+  {
+    id: 21, name: "Durum Maison", cat: "flemme", emoji: "🌯",
+    ingredients: "Wrap ou durum · Garniture du jour"
+  },
+  {
+    id: 22, name: "Pita Frites", cat: "flemme", emoji: "🥙",
+    ingredients: "Pita chaude · Frites · Garniture du jour"
+  },
+  {
+    id: 23, name: "Poulet Rôti", cat: "flemme", emoji: "🍗",
+    ingredients: "Poulet rôti · Accompagnement du jour (compote, pain, pita ou durum)"
+  },
+  {
+    id: 24, name: "Saucisses à la Liban", cat: "flemme", emoji: "🌭",
+    ingredients: "Saucisses · Oignons · Tomates cerise · Poivrons · Basilic ou thym"
+  },
+  {
+    id: 25, name: "Couque César", cat: "flemme", emoji: "🥖",
+    ingredients: "Couque · Poulet · Tomate · Salade · Dressing César"
+  },
 
-// COMFORT
-{
-id: 26, name: “Ulrich’s Stuffed Tomatoes ⭐”, cat: “comfort”, emoji: “🍅”,
-ingredients: “Tomates · Farce de poulet ou porc/veau · Herbes · Pâtes”
-},
-{
-id: 27, name: “Ragù Bolognese”, cat: “comfort”, emoji: “🍝”,
-ingredients: “Pâtes fraîches · Viande hachée · Sauce tomate mijotée · Fromage râpé”
-},
-{
-id: 28, name: “Carbonara Traditionnelle”, cat: “comfort”, emoji: “🍝”,
-ingredients: “Pâtes · Lardons · Œufs · Parmesan · Poivre noir — sans crème, comme à Rome”
-},
-{
-id: 29, name: “Milanaise & Pâtes”, cat: “comfort”, emoji: “🥩”,
-ingredients: “Escalope panée · Pâtes · Sauce tomate · Zeste de citron”
-},
-{
-id: 30, name: “Pinsa Pesto”, cat: “comfort”, emoji: “🍕”,
-ingredients: “Pinsa romaine · Poulet · Pesto · Tomates cerise · Mozzarella”
-},
-{
-id: 31, name: “Pâtes Burrata”, cat: “comfort”, emoji: “🍝”,
-ingredients: “Pâtes · Burrata crémeuse · Pesto · Tomates · Mortadelle ou jambon”
-},
-{
-id: 32, name: “Pierre’s Hachis ⭐”, cat: “comfort”, emoji: “🥘”,
-ingredients: “Viande hachée · Purée maison · Carottes (traces possibles) · Gratin doré”
-},
-{
-id: 33, name: “Burger Poulet”, cat: “comfort”, emoji: “🍔”,
-ingredients: “Pain brioche · Poulet croustillant · Garniture du jour”
-},
-{
-id: 34, name: “Ramen Maison”, cat: “comfort”, emoji: “🍜”,
-ingredients: “Bouillon riche · Porc ou poulet croustillant · Nouilles · Garnitures du chef”
-},
+  // COMFORT
+  {
+    id: 26, name: "Ulrich's Stuffed Tomatoes ⭐", cat: "comfort", emoji: "🍅",
+    ingredients: "Tomates · Farce de poulet ou porc/veau · Herbes · Pâtes"
+  },
+  {
+    id: 27, name: "Ragù Bolognese", cat: "comfort", emoji: "🍝",
+    ingredients: "Pâtes fraîches · Viande hachée · Sauce tomate mijotée · Fromage râpé"
+  },
+  {
+    id: 28, name: "Carbonara Traditionnelle", cat: "comfort", emoji: "🍝",
+    ingredients: "Pâtes · Lardons · Œufs · Parmesan · Poivre noir — sans crème, comme à Rome"
+  },
+  {
+    id: 29, name: "Milanaise & Pâtes", cat: "comfort", emoji: "🥩",
+    ingredients: "Escalope panée · Pâtes · Sauce tomate · Zeste de citron"
+  },
+  {
+    id: 30, name: "Pinsa Pesto", cat: "comfort", emoji: "🍕",
+    ingredients: "Pinsa romaine · Poulet · Pesto · Tomates cerise · Mozzarella"
+  },
+  {
+    id: 31, name: "Pâtes Burrata", cat: "comfort", emoji: "🍝",
+    ingredients: "Pâtes · Burrata crémeuse · Pesto · Tomates · Mortadelle ou jambon"
+  },
+  {
+    id: 32, name: "Pierre's Hachis ⭐", cat: "comfort", emoji: "🥘",
+    ingredients: "Viande hachée · Purée maison · Carottes (traces possibles) · Gratin doré"
+  },
+  {
+    id: 33, name: "Burger Poulet", cat: "comfort", emoji: "🍔",
+    ingredients: "Pain brioche · Poulet croustillant · Garniture du jour"
+  },
+  {
+    id: 34, name: "Ramen Maison", cat: "comfort", emoji: "🍜",
+    ingredients: "Bouillon riche · Porc ou poulet croustillant · Nouilles · Garnitures du chef"
+  },
 
-{
-id: 40, name: “Moussaka de chez Rudy”, cat: “comfort”, emoji: “🫕”,
-ingredients: “Je ne sais pas mais c’est délicieux ! (merci Rudy le boucher 🥩)”
-},
+  {
+    id: 40, name: "Moussaka de chez Rudy", cat: "comfort", emoji: "🫕",
+    ingredients: "Je ne sais pas mais c'est délicieux ! (merci Rudy le boucher 🥩)"
+  },
 
-// PAIN QUOTIDIEN
-{ id: 41, name: “Corbeille de Pains Bio”, cat: “painquotidien”, emoji: “🧺”,
-ingredients: “Tous les pains maison · Beurre bio · Confitures bio · Pâtes à tartiner bio · Chocolat praliné belge” },
-{ id: 42, name: “Œuf à la Coque Bio”, cat: “painquotidien”, emoji: “🥚”,
-ingredients: “Œuf bio cuit à la perfection, jaune éclatant et blanc tendre · Baguette bio croustillante · Pain au levain bio” },
-{ id: 43, name: “Œufs Brouillés”, cat: “painquotidien”, emoji: “🍳”,
-ingredients: “Œufs bio onctueux, texture légère et crémeuse · Extras au choix : bacon grillé, avocat frais ou saumon fumé de l’Atlantique” },
-{ id: 44, name: “Bowl Petit-Déjeuner”, cat: “painquotidien”, emoji: “🥣”,
-ingredients: “Vitamines · Protéines · Graisses saines · Fibres — tout réuni dans un seul bol” },
-{ id: 45, name: “Mini Pancakes”, cat: “painquotidien”, emoji: “🥞”,
-ingredients: “Petites crêpes hollandaises · Fruits frais de saison” },
-{ id: 46, name: “Crêpes Sucrées”, cat: “painquotidien”, emoji: “🫓”,
-ingredients: “Légères et rassasiantes · Assortiment de garnitures sucrées · Fruits juteux et fraîcheur” },
-{ id: 47, name: “Tartine Avocat”, cat: “painquotidien”, emoji: “🥑”,
-ingredients: “Pain au levain biologique 2KG grillé · Purée d’avocat frais · Option : œufs brouillés bio ou saumon fumé de l’Atlantique” },
-{ id: 48, name: “Tartare de Bœuf Belge”, cat: “painquotidien”, emoji: “🥩”,
-ingredients: “Tartare de bœuf belge bio assaisonné · Copeaux de parmesan · Huile de basilic · Tomates séchées bio — classique depuis 1990 !” },
-{ id: 49, name: “Saumon Fumé Atlantique”, cat: “painquotidien”, emoji: “🐟”,
-ingredients: “Saumon atlantique fumé · Skyr bio aux herbes fraîches · Ciboulette · Citron · Jeunes pousses” },
-{ id: 50, name: “Poulet & Mozzarella Fumée”, cat: “painquotidien”, emoji: “🍗”,
-ingredients: “Poulet tendre · Mozzarella fumée · Pain au levain biologique” },
-{ id: 51, name: “Tartine Thon”, cat: “painquotidien”, emoji: “🐟”,
-ingredients: “Thon · Richesse crémeuse · Texture croquante · Herbes parfumées” },
-{ id: 52, name: “Croque Monsieur LPQ”, cat: “painquotidien”, emoji: “🥪”,
-ingredients: “Pain de blé au levain biologique · Jambon de ferme belge · Gouda fondant” },
-{ id: 53, name: “Flatbread Végétarien”, cat: “painquotidien”, emoji: “🫓”,
-ingredients: “Houmous · Poivrons rôtis · Courgettes grillées · Jeunes pousses · Huile de basilic” },
-{ id: 54, name: “Soupe du Jour”, cat: “painquotidien”, emoji: “🍵”,
-ingredients: “Soupe vegan et bio · Légumes de saison · Herbes fraîches · Pain au levain bio” },
-{ id: 55, name: “Quiche Maison”, cat: “painquotidien”, emoji: “🥧”,
-ingredients: “Au choix : Lorraine · Feta & épinards · Saumon & poireaux” },
-{ id: 56, name: “Combo Soupe & Tartine”, cat: “painquotidien”, emoji: “🍲”,
-ingredients: “Bol de soupe vegan · Demi-tartine du jour · Salade fraîche” },
+  // PAIN QUOTIDIEN
+  { id: 41, name: "Corbeille de Pains Bio", cat: "painquotidien", emoji: "🧺",
+    ingredients: "Tous les pains maison · Beurre bio · Confitures bio · Pâtes à tartiner bio · Chocolat praliné belge" },
+  { id: 42, name: "Œuf à la Coque Bio", cat: "painquotidien", emoji: "🥚",
+    ingredients: "Œuf bio cuit à la perfection, jaune éclatant et blanc tendre · Baguette bio croustillante · Pain au levain bio" },
+  { id: 43, name: "Œufs Brouillés", cat: "painquotidien", emoji: "🍳",
+    ingredients: "Œufs bio onctueux, texture légère et crémeuse · Extras au choix : bacon grillé, avocat frais ou saumon fumé de l'Atlantique" },
+  { id: 44, name: "Bowl Petit-Déjeuner", cat: "painquotidien", emoji: "🥣",
+    ingredients: "Vitamines · Protéines · Graisses saines · Fibres — tout réuni dans un seul bol" },
+  { id: 45, name: "Mini Pancakes", cat: "painquotidien", emoji: "🥞",
+    ingredients: "Petites crêpes hollandaises · Fruits frais de saison" },
+  { id: 46, name: "Crêpes Sucrées", cat: "painquotidien", emoji: "🫓",
+    ingredients: "Légères et rassasiantes · Assortiment de garnitures sucrées · Fruits juteux et fraîcheur" },
+  { id: 47, name: "Tartine Avocat", cat: "painquotidien", emoji: "🥑",
+    ingredients: "Pain au levain biologique 2KG grillé · Purée d'avocat frais · Option : œufs brouillés bio ou saumon fumé de l'Atlantique" },
+  { id: 48, name: "Tartare de Bœuf Belge", cat: "painquotidien", emoji: "🥩",
+    ingredients: "Tartare de bœuf belge bio assaisonné · Copeaux de parmesan · Huile de basilic · Tomates séchées bio — classique depuis 1990 !" },
+  { id: 49, name: "Saumon Fumé Atlantique", cat: "painquotidien", emoji: "🐟",
+    ingredients: "Saumon atlantique fumé · Skyr bio aux herbes fraîches · Ciboulette · Citron · Jeunes pousses" },
+  { id: 50, name: "Poulet & Mozzarella Fumée", cat: "painquotidien", emoji: "🍗",
+    ingredients: "Poulet tendre · Mozzarella fumée · Pain au levain biologique" },
+  { id: 51, name: "Tartine Thon", cat: "painquotidien", emoji: "🐟",
+    ingredients: "Thon · Richesse crémeuse · Texture croquante · Herbes parfumées" },
+  { id: 52, name: "Croque Monsieur LPQ", cat: "painquotidien", emoji: "🥪",
+    ingredients: "Pain de blé au levain biologique · Jambon de ferme belge · Gouda fondant" },
+  { id: 53, name: "Flatbread Végétarien", cat: "painquotidien", emoji: "🫓",
+    ingredients: "Houmous · Poivrons rôtis · Courgettes grillées · Jeunes pousses · Huile de basilic" },
+  { id: 54, name: "Soupe du Jour", cat: "painquotidien", emoji: "🍵",
+    ingredients: "Soupe vegan et bio · Légumes de saison · Herbes fraîches · Pain au levain bio" },
+  { id: 55, name: "Quiche Maison", cat: "painquotidien", emoji: "🥧",
+    ingredients: "Au choix : Lorraine · Feta & épinards · Saumon & poireaux" },
+  { id: 56, name: "Combo Soupe & Tartine", cat: "painquotidien", emoji: "🍲",
+    ingredients: "Bol de soupe vegan · Demi-tartine du jour · Salade fraîche" },
 
-// UBEREATS
-{
-id: 36, name: “Frites”, cat: “ubereats”, emoji: “🍟”,
-ingredients: “On commande ce soir 🛵”
-},
-{
-id: 37, name: “Pizza”, cat: “ubereats”, emoji: “🍕”,
-ingredients: “On commande ce soir 🛵”
-},
-{
-id: 38, name: “Asiatique”, cat: “ubereats”, emoji: “🥡”,
-ingredients: “On commande ce soir 🛵”
-},
-{
-id: 39, name: “Autre”, cat: “ubereats”, emoji: “🛵”,
-ingredients: “On commande ce soir — précise ta commande par mail 🛵”
-},
+  // UBEREATS
+  {
+    id: 36, name: "Frites", cat: "ubereats", emoji: "🍟",
+    ingredients: "On commande ce soir 🛵"
+  },
+  {
+    id: 37, name: "Pizza", cat: "ubereats", emoji: "🍕",
+    ingredients: "On commande ce soir 🛵"
+  },
+  {
+    id: 38, name: "Asiatique", cat: "ubereats", emoji: "🥡",
+    ingredients: "On commande ce soir 🛵"
+  },
+  {
+    id: 39, name: "Autre", cat: "ubereats", emoji: "🛵",
+    ingredients: "On commande ce soir — précise ta commande par mail 🛵"
+  },
 ];
 
-const STORAGE_KEY = ‘bogoss_kitchen_meals’;
-let currentFilter = ‘all’;
+const STORAGE_KEY = 'bogoss_kitchen_meals';
+let currentFilter = 'all';
 let selectedCat = null;
-let selectedEmoji = ‘🍝’;
+let selectedEmoji = '🍝';
 
 function loadMeals() {
-try {
-const stored = localStorage.getItem(STORAGE_KEY);
-if (stored) return JSON.parse(stored);
-} catch(e) {}
-return JSON.parse(JSON.stringify(DEFAULT_MEALS));
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_MEALS));
 }
 
 function saveMeals(meals) {
-try { localStorage.setItem(STORAGE_KEY, JSON.stringify(meals)); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(meals)); } catch(e) {}
 }
 
 let meals = loadMeals();
 
 function getQuery() {
-return document.getElementById(‘search’).value.toLowerCase().trim();
+  return document.getElementById('search').value.toLowerCase().trim();
 }
 
 function renderAll() {
-const q = getQuery();
-[‘léger’,‘flemme’,‘comfort’,‘ubereats’,‘painquotidien’].forEach(cat => {
-const catId = cat === ‘léger’ ? ‘leger’ : cat;
-let filtered = meals.filter(m => m.cat === cat);
-if (currentFilter !== ‘all’ && currentFilter !== cat) filtered = [];
-if (q) filtered = filtered.filter(m => m.name.toLowerCase().includes(q));
+  const q = getQuery();
+  ['léger','flemme','comfort','ubereats','painquotidien'].forEach(cat => {
+    const catId = cat === 'léger' ? 'leger' : cat;
+    let filtered = meals.filter(m => m.cat === cat);
+    if (currentFilter !== 'all' && currentFilter !== cat) filtered = [];
+    if (q) filtered = filtered.filter(m => m.name.toLowerCase().includes(q));
 
-```
-const grid = document.getElementById('grid-' + catId);
-const count = document.getElementById('count-' + catId);
-const section = document.getElementById('section-' + catId);
+    const grid = document.getElementById('grid-' + catId);
+    const count = document.getElementById('count-' + catId);
+    const section = document.getElementById('section-' + catId);
 
-count.textContent = `${filtered.length} plat${filtered.length > 1 ? 's' : ''}`;
+    count.textContent = `${filtered.length} plat${filtered.length > 1 ? 's' : ''}`;
 
-if ((currentFilter !== 'all' && currentFilter !== cat)) {
-  section.classList.add('hidden');
-  return;
-}
-section.classList.remove('hidden');
+    if ((currentFilter !== 'all' && currentFilter !== cat)) {
+      section.classList.add('hidden');
+      return;
+    }
+    section.classList.remove('hidden');
 
-if (filtered.length === 0) {
-  grid.innerHTML = `<div class="empty-msg">Aucun plat trouvé.</div>`;
-  return;
-}
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-msg">Aucun plat trouvé.</div>`;
+      return;
+    }
 
-grid.innerHTML = filtered.map(m => `
-  <div class="meal-card ${m.cat}" style="animation-delay:${Math.random()*0.08}s" onclick="openConfirm(${m.id})">
-    <div class="card-img">${m.emoji}</div>
-    <div class="card-body">
-      <div class="meal-name-card">${m.name}</div>
-      <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : m.cat === 'ubereats' ? '🛵 UberEats' : m.cat === 'painquotidien' ? '🥐 Pain Quotidien' : '🫕 Comfort'}</span></div>
-    </div>
-  </div>
-`).join('');
-```
-
-});
+    grid.innerHTML = filtered.map(m => `
+      <div class="meal-card ${m.cat}" style="animation-delay:${Math.random()*0.08}s" onclick="openConfirm(${m.id})">
+        <div class="card-img">${m.emoji}</div>
+        <div class="card-body">
+          <div class="meal-name-card">${m.name}</div>
+          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : m.cat === 'ubereats' ? '🛵 UberEats' : m.cat === 'painquotidien' ? '🥐 Pain Quotidien' : '🫕 Comfort'}</span></div>
+        </div>
+      </div>
+    `).join('');
+  });
 }
 
 function setFilter(cat, btn) {
-currentFilter = cat;
-document.querySelectorAll(’.filter-btn’).forEach(b => b.classList.remove(‘active’));
-btn.classList.add(‘active’);
-renderAll();
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
 }
 
 function rollDice() {
-const q = getQuery();
-let pool = meals;
-if (currentFilter !== ‘all’) pool = pool.filter(m => m.cat === currentFilter);
-if (q) pool = pool.filter(m => m.name.toLowerCase().includes(q));
-if (!pool.length) { showToast(‘Aucun plat disponible 😅’); return; }
-const pick = pool[Math.floor(Math.random() * pool.length)];
-document.getElementById(‘lucky-name’).textContent = pick.emoji + ’ ’ + pick.name;
-document.getElementById(‘lucky-cat’).textContent = pick.cat === ‘léger’ ? ‘🥗 Léger’ : pick.cat === ‘flemme’ ? ‘🛋️ Flemme’ : ‘🫕 Comfort Food’;
-const b = document.getElementById(‘lucky-banner’);
-b.style.display = ‘none’;
-void b.offsetWidth;
-b.style.display = ‘block’;
+  const q = getQuery();
+  let pool = meals;
+  if (currentFilter !== 'all') pool = pool.filter(m => m.cat === currentFilter);
+  if (q) pool = pool.filter(m => m.name.toLowerCase().includes(q));
+  if (!pool.length) { showToast('Aucun plat disponible 😅'); return; }
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  document.getElementById('lucky-name').textContent = pick.emoji + ' ' + pick.name;
+  document.getElementById('lucky-cat').textContent = pick.cat === 'léger' ? '🥗 Léger' : pick.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
+  const b = document.getElementById('lucky-banner');
+  b.style.display = 'none';
+  void b.offsetWidth;
+  b.style.display = 'block';
 }
 
 function closeLucky() {
-document.getElementById(‘lucky-banner’).style.display = ‘none’;
+  document.getElementById('lucky-banner').style.display = 'none';
 }
+
 
 // MODAL
 function openModal() {
-selectedCat = null;
-selectedEmoji = ‘🍝’;
-document.getElementById(‘input-name’).value = ‘’;
-document.querySelectorAll(’.cat-option’).forEach(b => b.classList.remove(‘selected’));
-document.querySelectorAll(’.emoji-opt’).forEach(b => b.classList.remove(‘selected’));
-document.querySelector(’.emoji-opt’).classList.add(‘selected’);
-document.getElementById(‘modal’).classList.add(‘open’);
-document.getElementById(‘input-name’).focus();
+  selectedCat = null;
+  selectedEmoji = '🍝';
+  document.getElementById('input-name').value = '';
+  document.querySelectorAll('.cat-option').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.emoji-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelector('.emoji-opt').classList.add('selected');
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('input-name').focus();
 }
 
 function closeModal() {
-document.getElementById(‘modal’).classList.remove(‘open’);
+  document.getElementById('modal').classList.remove('open');
 }
 
 function maybeClose(e) {
-if (e.target === document.getElementById(‘modal’)) closeModal();
+  if (e.target === document.getElementById('modal')) closeModal();
 }
 
 function selectCat(val) {
-selectedCat = val;
-document.querySelectorAll(’.cat-option’).forEach(b => b.classList.remove(‘selected’));
-document.querySelector(`.cat-option[data-val="${val}"]`).classList.add(‘selected’);
+  selectedCat = val;
+  document.querySelectorAll('.cat-option').forEach(b => b.classList.remove('selected'));
+  document.querySelector(`.cat-option[data-val="${val}"]`).classList.add('selected');
 }
 
 function selectEmoji(el) {
-selectedEmoji = el.textContent;
-document.querySelectorAll(’.emoji-opt’).forEach(b => b.classList.remove(‘selected’));
-el.classList.add(‘selected’);
+  selectedEmoji = el.textContent;
+  document.querySelectorAll('.emoji-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
 function saveNewMeal() {
-const name = document.getElementById(‘input-name’).value.trim();
-if (!name) { showToast(‘Donne un nom au plat 👀’); return; }
-if (!selectedCat) { showToast(‘Choisis une catégorie’); return; }
-const newMeal = {
-id: Date.now(),
-name,
-cat: selectedCat,
-emoji: selectedEmoji
-};
-meals.push(newMeal);
-saveMeals(meals);
-closeModal();
-renderAll();
-showToast(‘✅ ’ + name + ’ ajouté !’);
+  const name = document.getElementById('input-name').value.trim();
+  if (!name) { showToast('Donne un nom au plat 👀'); return; }
+  if (!selectedCat) { showToast('Choisis une catégorie'); return; }
+  const newMeal = {
+    id: Date.now(),
+    name,
+    cat: selectedCat,
+    emoji: selectedEmoji
+  };
+  meals.push(newMeal);
+  saveMeals(meals);
+  closeModal();
+  renderAll();
+  showToast('✅ ' + name + ' ajouté !');
 
-const catLabel = selectedCat === ‘léger’ ? ‘🥗 Léger’ : selectedCat === ‘flemme’ ? ‘🛋️ Flemme’ : selectedCat === ‘ubereats’ ? ‘🛵 UberEats’ : selectedCat === ‘painquotidien’ ? ‘🥐 Pain Quotidien’ : ‘🫕 Comfort Food’;
+  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : selectedCat === 'ubereats' ? '🛵 UberEats' : selectedCat === 'painquotidien' ? '🥐 Pain Quotidien' : '🫕 Comfort Food';
 
-if (selectedCat === ‘ubereats’) {
-const subject = encodeURIComponent(‘BOGOSS KITCHEN (Notification)’);
-const body = encodeURIComponent(‘Commande UberEats ce soir :\n\n’ + selectedEmoji + ’ ’ + name);
-window.location.href = ‘mailto:uheulle@gmail.com?subject=’ + subject + ‘&body=’ + body;
-} else {
-const subject = encodeURIComponent(‘NOUVEAU PLAT (BOGOSS KITCHEN)’);
-const ingredients = document.getElementById(‘input-ingredients’) ? document.getElementById(‘input-ingredients’).value.trim() : ‘’;
-const body = encodeURIComponent(‘Nouveau plat proposé sur BOGOSS KITCHEN !\n\n’ + selectedEmoji + ’ ’ + name + ‘\n’ + ’Catégorie : ’ + catLabel + (ingredients ? ’\nIngrédients : ’ + ingredients : ‘’));
-window.location.href = ‘mailto:uheulle@gmail.com?subject=’ + subject + ‘&body=’ + body;
-}
+  if (selectedCat === 'ubereats') {
+    const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
+    const body = encodeURIComponent('Commande UberEats ce soir :\n\n' + selectedEmoji + ' ' + name);
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+  } else {
+    const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
+    const ingredients = document.getElementById('input-ingredients') ? document.getElementById('input-ingredients').value.trim() : '';
+    const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel + (ingredients ? '\nIngrédients : ' + ingredients : ''));
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+  }
 }
 
 function showToast(msg) {
-const t = document.createElement(‘div’);
-t.className = ‘toast’;
-t.textContent = msg;
-document.body.appendChild(t);
-setTimeout(() => t.remove(), 2500);
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
 }
 
 // Keyboard shortcuts
-document.addEventListener(‘keydown’, e => {
-if (e.key === ‘Escape’) { closeModal(); closeLucky(); }
-if (e.key === ‘Enter’ && document.getElementById(‘modal’).classList.contains(‘open’)) saveNewMeal();
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeLucky(); }
+  if (e.key === 'Enter' && document.getElementById('modal').classList.contains('open')) saveNewMeal();
 });
 
 let confirmMealId = null;
-let selectedBoisson = ‘’;
+let selectedBoisson = '';
 
 function selectBoisson(el) {
-document.querySelectorAll(’.boisson-opt’).forEach(b => b.classList.remove(‘selected’));
-el.classList.add(‘selected’);
-selectedBoisson = el.dataset.boisson;
-const needsDetail = [‘Soda’, ‘Bière’, ‘Vin’].includes(selectedBoisson);
-document.getElementById(‘boisson-detail-wrap’).style.display = needsDetail ? ‘block’ : ‘none’;
-if (!needsDetail) document.getElementById(‘boisson-detail’).value = ‘’;
+  document.querySelectorAll('.boisson-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedBoisson = el.dataset.boisson;
+  const needsDetail = ['Soda', 'Bière', 'Vin'].includes(selectedBoisson);
+  document.getElementById('boisson-detail-wrap').style.display = needsDetail ? 'block' : 'none';
+  if (!needsDetail) document.getElementById('boisson-detail').value = '';
 }
 
 function openConfirm(id) {
-const meal = meals.find(m => m.id === id);
-if (!meal) return;
-confirmMealId = id;
-document.getElementById(‘confirm-emoji’).textContent = meal.emoji;
-document.getElementById(‘confirm-meal-name’).textContent = meal.name;
-document.getElementById(‘confirm-ingredients’).textContent = meal.ingredients || ‘’;
-document.getElementById(‘confirm-comment’).value = ‘’;
-document.getElementById(‘boisson-detail’).value = ‘’;
-document.getElementById(‘boisson-detail-wrap’).style.display = ‘none’;
-document.querySelectorAll(’.boisson-opt’).forEach(b => b.classList.remove(‘selected’));
-selectedBoisson = ‘’;
-document.getElementById(‘confirm-modal’).classList.add(‘open’);
-setTimeout(() => document.getElementById(‘confirm-comment’).focus(), 100);
+  const meal = meals.find(m => m.id === id);
+  if (!meal) return;
+  confirmMealId = id;
+  document.getElementById('confirm-emoji').textContent = meal.emoji;
+  document.getElementById('confirm-meal-name').textContent = meal.name;
+  document.getElementById('confirm-ingredients').textContent = meal.ingredients || '';
+  document.getElementById('confirm-comment').value = '';
+  document.getElementById('boisson-detail').value = '';
+  document.getElementById('boisson-detail-wrap').style.display = 'none';
+  document.querySelectorAll('.boisson-opt').forEach(b => b.classList.remove('selected'));
+  selectedBoisson = '';
+  document.getElementById('confirm-modal').classList.add('open');
+  setTimeout(() => document.getElementById('confirm-comment').focus(), 100);
 }
 
 function closeConfirm() {
-document.getElementById(‘confirm-modal’).classList.remove(‘open’);
-confirmMealId = null;
+  document.getElementById('confirm-modal').classList.remove('open');
+  confirmMealId = null;
 }
 
 function maybeCloseConfirm(e) {
-if (e.target === document.getElementById(‘confirm-modal’)) closeConfirm();
+  if (e.target === document.getElementById('confirm-modal')) closeConfirm();
 }
 
 function confirmMeal() {
-const meal = meals.find(m => m.id === confirmMealId);
-if (!meal) return;
-const comment = document.getElementById(‘confirm-comment’).value.trim();
-const catLabel = meal.cat === ‘léger’ ? ‘🥗 Léger’ : meal.cat === ‘flemme’ ? ‘🛋️ Flemme’ : ‘🫕 Comfort Food’;
-closeConfirm();
-showToast(meal.emoji + ’ ’ + meal.name + ’ confirmé !’);
-const subject = encodeURIComponent(‘BOGOSS KITCHEN (Notification)’);
-const boissonDetail = document.getElementById(‘boisson-detail’).value.trim();
-const boissonFull = selectedBoisson ? (selectedBoisson + (boissonDetail ? ’ — ’ + boissonDetail : ‘’)) : ‘Non précisée’;
-const body = encodeURIComponent(
-‘Plat sélectionné ce soir :\n\n’
-+ meal.emoji + ’ ’ + meal.name + ‘\n’
-+ ’Catégorie : ’ + catLabel + ‘\n’
-+ ’Ingrédients : ’ + (meal.ingredients || ‘N/A’) + ‘\n’
-+ ’Boisson : ’ + boissonFull
-+ (comment ? ’\n\nCommentaire : ’ + comment : ‘’)
-);
-window.location.href = ‘mailto:uheulle@gmail.com?subject=’ + subject + ‘&body=’ + body;
+  const meal = meals.find(m => m.id === confirmMealId);
+  if (!meal) return;
+  const comment = document.getElementById('confirm-comment').value.trim();
+  const catLabel = meal.cat === 'léger' ? '🥗 Léger' : meal.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
+  closeConfirm();
+  showToast(meal.emoji + ' ' + meal.name + ' confirmé !');
+  const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
+  const boissonDetail = document.getElementById('boisson-detail').value.trim();
+  const boissonFull = selectedBoisson ? (selectedBoisson + (boissonDetail ? ' — ' + boissonDetail : '')) : 'Non précisée';
+  const body = encodeURIComponent(
+    'Plat sélectionné ce soir :\n\n'
+    + meal.emoji + ' ' + meal.name + '\n'
+    + 'Catégorie : ' + catLabel + '\n'
+    + 'Ingrédients : ' + (meal.ingredients || 'N/A') + '\n'
+    + 'Boisson : ' + boissonFull
+    + (comment ? '\n\nCommentaire : ' + comment : '')
+  );
+  window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
 }
 
-document.addEventListener(‘DOMContentLoaded’, renderAll);
+document.addEventListener('DOMContentLoaded', renderAll);
 </script>
-
 </body>
 </html>
