@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BOGOSS KITCHEN</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -61,9 +61,7 @@
   .tag.léger { background: var(--leger-bg); color: var(--leger-text); }
   .tag.flemme { background: var(--flemme-bg); color: var(--flemme-text); }
   .tag.comfort { background: var(--comfort-bg); color: var(--comfort-text); }
-  .delete-btn { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); border: none; color: transparent; cursor: pointer; font-size: 12px; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; transition: color 0.15s; }
-  .meal-card:hover .delete-btn { color: #fff; }
-  .delete-btn:hover { color: var(--comfort-text) !important; }
+  .meal-card:hover
   .empty-msg { color: var(--muted); font-size: 13px; font-style: italic; padding: 16px 0; }
   .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid var(--border); padding: 12px 20px 24px; display: flex; gap: 10px; z-index: 200; }
   .inspire-btn { flex: 1; background: var(--green); color: #000; border: none; border-radius: 14px; padding: 16px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.18s; }
@@ -81,7 +79,7 @@
   .form-input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 16px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; border-radius: 10px; transition: border-color 0.2s; }
   .form-input:focus { border-color: var(--green); }
   .form-input::placeholder { color: var(--muted); }
-  .cat-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cat-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .cat-option { padding: 10px 8px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif; border-radius: 10px; transition: all 0.18s; text-align: center; }
   .cat-option[data-val="léger"].selected { border-color: var(--leger-text); color: var(--leger-text); background: var(--leger-bg); }
   .cat-option[data-val="flemme"].selected { border-color: var(--flemme-text); color: var(--flemme-text); background: var(--flemme-bg); }
@@ -96,6 +94,11 @@
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 12px 20px; font-size: 13px; font-weight: 600; z-index: 9999; animation: toastIn 0.2s ease; border-radius: 100px; white-space: nowrap; }
   @keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
   @media (min-width: 600px) { header, main { padding-left: 40px; padding-right: 40px; } .meals-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } .bottom-bar { padding-left: 40px; padding-right: 40px; } }
+  .ubereats-bg { background: #1a1000; }
+  .tag.ubereats { background: #1a1000; color: #fa5252; }
+  .meal-card.ubereats .card-img { background: #1a1000; }
+  .cat-option[data-val="ubereats"].selected { border-color: #fa5252; color: #fa5252; background: #1a1000; }
+  .filter-btn[data-cat="ubereats"].active { background: #fa5252; color: #fff; }
 </style>
 </head>
 <body>
@@ -116,6 +119,7 @@
     <button class="filter-btn" data-cat="léger" onclick="setFilter('léger', this)">🥗 Léger</button>
     <button class="filter-btn" data-cat="flemme" onclick="setFilter('flemme', this)">🛋️ Flemme</button>
     <button class="filter-btn" data-cat="comfort" onclick="setFilter('comfort', this)">🫕 Comfort</button>
+    <button class="filter-btn" data-cat="ubereats" onclick="setFilter('ubereats', this)">🛵 UberEats</button>
   </div>
 </header>
 
@@ -151,6 +155,14 @@
     </div>
     <div class="meals-grid" id="grid-comfort"></div>
   </div>
+  <div class="section" id="section-ubereats">
+    <div class="section-header">
+      <div class="section-title">🛵 UberEats</div>
+      <div class="section-count" id="count-ubereats"></div>
+      <div class="section-line"></div>
+    </div>
+    <div class="meals-grid" id="grid-ubereats"></div>
+  </div>
 </main>
 
 <div class="bottom-bar">
@@ -171,6 +183,7 @@
         <button class="cat-option" data-val="léger" onclick="selectCat('léger')">🥗 Léger</button>
         <button class="cat-option" data-val="flemme" onclick="selectCat('flemme')">🛋️ Flemme</button>
         <button class="cat-option" data-val="comfort" onclick="selectCat('comfort')">🫕 Comfort</button>
+        <button class="cat-option" data-val="ubereats" onclick="selectCat('ubereats')">🛵 UberEats</button>
       </div>
     </div>
     <div class="form-group">
@@ -262,6 +275,12 @@ const DEFAULT_MEALS = [
   { id: 32, name: "Hachis parmentier", cat: "comfort", emoji: "🥘" },
   { id: 33, name: "Burgers poulet", cat: "comfort", emoji: "🍔" },
   { id: 34, name: "Hachis parmentier", cat: "comfort", emoji: "🥘" },
+
+  // UBEREATS
+  { id: 36, name: "Frites", cat: "ubereats", emoji: "🍟" },
+  { id: 37, name: "Pizza", cat: "ubereats", emoji: "🍕" },
+  { id: 38, name: "Asiatique", cat: "ubereats", emoji: "🥡" },
+  { id: 39, name: "Autre (préciser)", cat: "ubereats", emoji: "🛵" },
 ];
 
 const STORAGE_KEY = 'bogoss_kitchen_meals';
@@ -289,7 +308,7 @@ function getQuery() {
 
 function renderAll() {
   const q = getQuery();
-  ['léger','flemme','comfort'].forEach(cat => {
+  ['léger','flemme','comfort','ubereats'].forEach(cat => {
     const catId = cat === 'léger' ? 'leger' : cat;
     let filtered = meals.filter(m => m.cat === cat);
     if (currentFilter !== 'all' && currentFilter !== cat) filtered = [];
@@ -317,9 +336,8 @@ function renderAll() {
         <div class="card-img">${m.emoji}</div>
         <div class="card-body">
           <div class="meal-name-card">${m.name}</div>
-          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort'}</span></div>
+          <div class="meal-tags"><span class="tag ${m.cat}">${m.cat === 'léger' ? '🥗 Léger' : m.cat === 'flemme' ? '🛋️ Flemme' : m.cat === 'ubereats' ? '🛵 UberEats' : '🫕 Comfort'}</span></div>
         </div>
-        <button class="delete-btn" onclick="deleteMeal(${m.id}, event)" title="Supprimer">✕</button>
       </div>
     `).join('');
   });
@@ -351,14 +369,6 @@ function closeLucky() {
   document.getElementById('lucky-banner').style.display = 'none';
 }
 
-function deleteMeal(id, e) {
-  e.stopPropagation();
-  if (!confirm('Supprimer ce plat ?')) return;
-  meals = meals.filter(m => m.id !== id);
-  saveMeals(meals);
-  renderAll();
-  showToast('Plat supprimé');
-}
 
 // MODAL
 function openModal() {
@@ -408,15 +418,18 @@ function saveNewMeal() {
   renderAll();
   showToast('✅ ' + name + ' ajouté !');
 
-  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : '🫕 Comfort Food';
-  const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
-  const body = encodeURIComponent(
-    'Nouveau plat proposé sur BOGOSS KITCHEN !\n\n'
-    + selectedEmoji + ' ' + name + '\n'
-    + 'Catégorie : ' + catLabel
-  );
-  window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
-  createGithubPR(newMeal);
+  const catLabel = selectedCat === 'léger' ? '🥗 Léger' : selectedCat === 'flemme' ? '🛋️ Flemme' : selectedCat === 'ubereats' ? '🛵 UberEats' : '🫕 Comfort Food';
+
+  if (selectedCat === 'ubereats') {
+    const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
+    const body = encodeURIComponent('Commande UberEats ce soir :\n\n' + selectedEmoji + ' ' + name);
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+  } else {
+    const subject = encodeURIComponent('NOUVEAU PLAT (BOGOSS KITCHEN)');
+    const body = encodeURIComponent('Nouveau plat proposé sur BOGOSS KITCHEN !\n\n' + selectedEmoji + ' ' + name + '\n' + 'Catégorie : ' + catLabel);
+    window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+    createGithubPR(newMeal);
+  }
 }
 
 function showToast(msg) {
@@ -479,7 +492,7 @@ function setGithubToken(t) {
 
 const GITHUB_REPO = 'heulle/BOGOSSKITCHEN';
 const GITHUB_FILE = 'index.html';
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = localStorage.getItem('bk_gh_token') || '';
 
 async function createGithubPR(meal) {
   const token = localStorage.getItem('bk_gh_token');
