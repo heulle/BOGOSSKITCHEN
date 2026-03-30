@@ -27,22 +27,29 @@
     position: sticky; 
     top: 0; 
     z-index: 100; 
-    transition: all 0.3s ease; /* On met 'all' pour que la taille du logo s'anime aussi */
+    transition: all 0.3s ease;
+  }
+
+  /* TAILLE PAR DÉFAUT (AVANT LE SCROLL) */
+  .top-row img {
+    height: 130px; 
+    width: 130px;
+    object-fit: contain; /* Évite de déformer l'image */
+    transition: all 0.3s ease;
   }
 
   header.scrolled { 
     background: rgba(245,240,232,0.85); 
-    padding-top: 10px !important; /* On réduit l'espace en haut au scroll */
+    padding-top: 10px !important;
     backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px); 
   }
 
-  /* C'est CETTE règle qui fait rétrécir le logo */
+  /* TAILLE RÉDUITE (PENDANT LE SCROLL) */
   header.scrolled .top-row img {
     height: 60px !important; 
     width: 60px !important;
   }
-
   .top-row { 
     display: flex; 
     align-items: center; 
@@ -176,7 +183,7 @@
 
 <header>
   <div class="top-row" style="justify-content:center; padding:8px 0 4px;">
-    <img src="logo.png" class="main-logo" style="object-fit:contain;"> </div>
+    <img src="logo.png"> </div>
   <div class="search-bar">
    
     <span class="search-icon">🔍</span>
