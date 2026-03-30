@@ -39,10 +39,11 @@
   }
 
   header.scrolled { 
-    background: rgba(245,240,232,0.85); 
-    padding-top: 10px !important;
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
+    background: rgba(245,240,232,0.7); 
+    padding-top: 20px !important;
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+   border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
   }
 
   /* TAILLE RÉDUITE (PENDANT LE SCROLL) */
@@ -105,7 +106,9 @@
   .inspire-btn:hover { opacity: 0.88; }
   .add-btn { background: #d4cfc6; color: #1a1a18; border: none; border-radius: 14px; padding: 16px 20px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.18s; white-space: nowrap; }
   .add-btn:hover { background: #333; }
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: flex-end; justify-content: center; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-top: 60px; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: flex-end; justify-content: center; overflow-y: auto; -webkit-overflow-scrolling: touch; 
+  overscroll-behavior-y: contain; 
+  padding-top: 60px;}
   .modal-overlay.open { display: flex; }
   .modal { background: #f0ece4; border-radius: 20px 20px 0 0; padding: 0; width: 100%; max-width: 520px; animation: modalUp 0.25s ease; }
   @keyframes modalUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
