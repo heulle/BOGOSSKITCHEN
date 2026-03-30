@@ -21,9 +21,34 @@
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  header { background: transparent; padding: 32px 20px 0; position: sticky; top: 0; z-index: 100; transition: background 0.3s, backdrop-filter 0.3s; }
-  header.scrolled { background: rgba(245,240,232,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-  .top-row { display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  header { 
+    background: transparent; 
+    padding: 32px 20px 0; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+    transition: all 0.3s ease; /* On met 'all' pour que la taille du logo s'anime aussi */
+  }
+
+  header.scrolled { 
+    background: rgba(245,240,232,0.85); 
+    padding-top: 10px !important; /* On réduit l'espace en haut au scroll */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+  }
+
+  /* C'est CETTE règle qui fait rétrécir le logo */
+  header.scrolled .top-row img {
+    height: 60px !important; 
+    width: 60px !important;
+  }
+
+  .top-row { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 8px; 
+  }
   .logo { font-size: 34px; font-weight: 900; letter-spacing: -0.5px; font-family: 'Nunito', sans-serif; }
   .logo span { color: var(--green); }
   .tagline { font-size: 15px; color: var(--muted); margin-top: 4px; font-style: italic; font-weight: 600; }
@@ -150,8 +175,8 @@
 <div class="bg-blur" style=""></div>
 
 <header>
-  <div class="top-row" style="justify-content:center;padding:8px 0 4px;">
-    <img src="logo.png" style="height:130px;width:130px;object-fit:contain;"> </div>
+  <div class="top-row" style="justify-content:center; padding:8px 0 4px;">
+    <img src="logo.png" class="main-logo" style="object-fit:contain;"> </div>
   <div class="search-bar">
    
     <span class="search-icon">🔍</span>
@@ -897,14 +922,14 @@ function confirmMeal() {
 
 document.addEventListener('DOMContentLoaded', renderAll);
 
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  if (window.scrollY > 10) {
-    header.classList.add('scrolled');
+window.onscroll = function() {
+  const header = document.querySelector("header");
+  if (window.pageYOffset > 50) {
+    header.classList.add("scrolled");
   } else {
-    header.classList.remove('scrolled');
+    header.classList.remove("scrolled");
   }
-});
+};
 </script>
 <!-- RECIPE MODAL -->
 <div class="recipe-modal-overlay" id="recipe-modal-overlay" onclick="maybeCloseRecipe(event)">
