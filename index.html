@@ -200,9 +200,10 @@
     --border: rgba(255,255,255,0.1);
   }
 
-  /* Fix logo en dark mode : légère luminosité + drop shadow pour le faire ressortir */
-  .top-row img {
-    filter: brightness(1.08) drop-shadow(0 0 8px rgba(113,190,123,0.25));
+  /* Fix logo en dark mode : mix-blend-mode pour supprimer le fond blanc */
+  .top-row img, .splash-logo {
+    mix-blend-mode: screen;
+    filter: brightness(1.15);
   }
 
   /* Ajustement pour le header au scroll en mode dark */
@@ -256,21 +257,42 @@
   transition: opacity 0.5s ease, transform 0.5s ease;
   padding: 40px 32px;
 }
+@media (prefers-color-scheme: dark) {
+  .splash-screen { background: #121210; }
+  .splash-title { color: #f5f0e8; }
+}
 .splash-screen.hidden-out {
   opacity: 0;
   transform: scale(1.04);
   pointer-events: none;
 }
 .splash-logo {
-  width: 140px;
-  height: 140px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
-  margin-bottom: 20px;
-  animation: splashLogoIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  margin-bottom: 28px;
+  animation: splashLogoIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
 }
 @keyframes splashLogoIn {
-  from { opacity: 0; transform: scale(0.7); }
+  from { opacity: 0; transform: scale(0.6); }
   to   { opacity: 1; transform: scale(1); }
+}
+.splash-screen.zooming-out {
+  opacity: 0;
+  transition: opacity 0.45s ease 0.25s;
+}
+.splash-screen.zooming-out .splash-logo {
+  transform: scale(4);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.1s;
+}
+.splash-screen.zooming-out .splash-title,
+.splash-screen.zooming-out .splash-buttons {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .splash-title {
   font-size: 26px;
@@ -1083,9 +1105,22 @@ function confirmMeal() {
 
 function closeSplash() {
   const splash = document.getElementById('splash-screen');
-  splash.classList.add('hidden-out');
-  setTimeout(() => { splash.style.display = 'none'; }, 520);
+  // Déclenche l'animation zoom
+  splash.classList.add('zooming-out');
+  // Retire du DOM après la fin de l'animation
+  setTimeout(() => { splash.style.display = 'none'; }, 700);
 }
+
+// Applique le dark mode au splash via JS pour iOS (contourne les bugs media query)
+(function() {
+  const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const splash = document.getElementById('splash-screen');
+  const title = splash ? splash.querySelector('.splash-title') : null;
+  if (isDark && splash) {
+    splash.style.background = '#121210';
+    if (title) title.style.color = '#f5f0e8';
+  }
+})();
 
 document.addEventListener('DOMContentLoaded', renderAll);
 
