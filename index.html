@@ -200,6 +200,11 @@
     --border: rgba(255,255,255,0.1);
   }
 
+  /* Fix logo en dark mode : légère luminosité + drop shadow pour le faire ressortir */
+  .top-row img {
+    filter: brightness(1.08) drop-shadow(0 0 8px rgba(113,190,123,0.25));
+  }
+
   /* Ajustement pour le header au scroll en mode dark */
   header.scrolled {
     background: rgba(18, 18, 16, 0.8) !important;
@@ -215,10 +220,126 @@
     background: var(--green);
     color: #000;
   }
+
+  /* Splash screen dark mode */
+  .splash-screen {
+    background: #121210;
+  }
+  .splash-tagline {
+    color: #a19b8f;
+  }
+  .splash-btn-find {
+    background: #71BE7B;
+    color: #000;
+  }
+  .splash-btn-welcome {
+    background: #1c1c1a;
+    color: #f5f0e8;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
 }
+
+/* === SPLASH SCREEN === */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #f5f0e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  padding: 40px 32px;
+}
+.splash-screen.hidden-out {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+.splash-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  animation: splashLogoIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes splashLogoIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.splash-title {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  animation: splashFadeUp 0.5s 0.15s ease both;
+}
+.splash-title span { color: var(--green); }
+.splash-tagline {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 48px;
+  animation: splashFadeUp 0.5s 0.25s ease both;
+}
+.splash-title {
+  margin-bottom: 64px;
+}
+@keyframes splashFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.splash-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+  animation: splashFadeUp 0.5s 0.35s ease both;
+}
+.splash-btn-find {
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.15s;
+}
+.splash-btn-find:hover { opacity: 0.88; transform: scale(1.02); }
+.splash-btn-welcome {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.15s;
+}
+.splash-btn-welcome:hover { opacity: 0.78; transform: scale(1.02); }
 </style>
 </head>
 <body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-screen" id="splash-screen">
+  <img src="logo.png" class="splash-logo" alt="Bogoss Kitchen">
+  <div class="splash-title">Qu'est-ce qu'on mange <span>ce soir ?</span></div>
+  <div class="splash-buttons">
+    <button class="splash-btn-find" onclick="closeSplash()">🍽️ C'est parti !</button>
+  </div>
+</div>
+
 <div class="bg-blur" style=""></div>
 
 <header>
@@ -965,6 +1086,12 @@ function confirmMeal() {
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
   window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
+}
+
+function closeSplash() {
+  const splash = document.getElementById('splash-screen');
+  splash.classList.add('hidden-out');
+  setTimeout(() => { splash.style.display = 'none'; }, 520);
 }
 
 document.addEventListener('DOMContentLoaded', renderAll);
