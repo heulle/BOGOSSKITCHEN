@@ -8,6 +8,17 @@
 <meta name="apple-mobile-web-app-title" content="Bogoss Kitchen">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>BOGOSS KITCHEN</title>
+<script>
+  // Détection dark mode immédiate — avant tout rendu
+  document.addEventListener('DOMContentLoaded', function() {
+    const splash = document.getElementById('splash-screen');
+    if (splash && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      splash.style.background = '#1a1f18';
+      const title = splash.querySelector('.splash-title');
+      if (title) title.style.color = '#dde8d0';
+    }
+  });
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -355,7 +366,7 @@
 <body style="overflow: hidden;">
 
 <!-- SPLASH SCREEN -->
-<div class="splash-screen" id="splash-screen">
+<div id="splash-screen" style="position:fixed;inset:0;width:100%;height:100%;z-index:9999;background:#f5f0e8;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;font-family:'Nunito',sans-serif;">
   <img src="logo.png" class="splash-logo" alt="Bogoss Kitchen">
   <div class="splash-title">Qu'est-ce qu'on mange <span>ce soir ?</span></div>
   <div class="splash-buttons">
@@ -1113,11 +1124,12 @@ function confirmMeal() {
 
 function closeSplash() {
   const splash = document.getElementById('splash-screen');
-  splash.classList.add('zooming-out');
+  splash.style.opacity = '0';
+  splash.style.transition = 'opacity 0.4s ease';
   setTimeout(() => {
     splash.style.display = 'none';
     document.body.style.overflow = '';
-  }, 700);
+  }, 420);
 }
 
 document.addEventListener('DOMContentLoaded', renderAll);
