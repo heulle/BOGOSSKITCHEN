@@ -192,61 +192,70 @@
   }
  @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #121210;         /* Noir très profond */
-    --surface: #1c1c1a;    /* Gris anthracite */
-    --surface2: #2d2d2a;   /* Pour les inputs */
-    --text: #f5f0e8;       /* Ton crème devient la couleur du texte */
-    --muted: #a19b8f;      /* Texte secondaire */
-    --border: rgba(255,255,255,0.1);
+    --bg: #1a1f18;          /* Vert olive très sombre */
+    --surface: #222820;     /* Surface légèrement plus claire */
+    --surface2: #2c332a;    /* Inputs */
+    --text: #dde8d0;        /* Blanc cassé verdâtre, doux pour les yeux */
+    --muted: #8a9e80;       /* Texte secondaire olive */
+    --border: rgba(180,210,160,0.12);
+    --green: #7ec97a;       /* Vert un poil plus lumineux pour contraster */
+    --green-dark: #2a5c30;
   }
 
-  /* Fix logo en dark mode : mix-blend-mode pour supprimer le fond blanc */
+  /* Logo : mix-blend-mode screen pour effacer le fond blanc */
   .top-row img, .splash-logo {
     mix-blend-mode: screen;
     filter: brightness(1.15);
   }
 
-  /* Ajustement pour le header au scroll en mode dark */
+  /* Header scrolled */
   header.scrolled {
-    background: rgba(18, 18, 16, 0.8) !important;
+    background: rgba(26, 31, 24, 0.85) !important;
   }
 
-  /* La barre du bas doit aussi changer */
+  /* Barre du bas */
   .bottom-bar {
-    background: #1c1c1a;
+    background: #222820;
     border-top: 1px solid var(--border);
   }
-  
+
+  /* Filtre actif */
   .filter-btn.active {
     background: var(--green);
-    color: #000;
+    color: #0f1a0e;
   }
 
-  /* Splash screen dark mode */
+  /* Splash dark */
   .splash-screen {
-    background: #121210;
+    background: #1a1f18;
   }
   .splash-title {
-    color: #f5f0e8;
+    color: #dde8d0;
   }
-  .splash-tagline {
-    color: #a19b8f;
-  }
-  .splash-btn-find {
-    background: #71BE7B;
-    color: #000;
-  }
-  .splash-btn-welcome {
-    background: #1c1c1a;
-    color: #f5f0e8;
-    border: 1px solid rgba(255,255,255,0.15);
-  }
+
+  /* Texte des recettes — hardcodé en clair, on force en mode sombre */
+  .recipe-modal-text { color: #c8d8bc; }
+  .recipe-text { color: #a8bf9a; }
+  .recipe-modal { background: #222820; }
+  .recipe-modal-title { color: #dde8d0; }
+
+  /* Tags — légèrement désaturés pour ne pas agresser */
+  .tag.léger     { background: #1e3a28; color: #7ec97a; }
+  .tag.flemme    { background: #3a2a10; color: #d4954a; }
+  .tag.comfort   { background: #3a1a18; color: #d47070; }
+
+  .meal-card.léger  .card-img { background: #1e2e1e; }
+  .meal-card.flemme .card-img { background: #2e2210; }
+  .meal-card.comfort .card-img { background: #2e1818; }
+}
 }
 
 /* === SPLASH SCREEN === */
 .splash-screen {
   position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 9999;
   background: #f5f0e8;
   display: flex;
@@ -254,13 +263,12 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease;
   padding: 40px 32px;
 }
-@media (prefers-color-scheme: dark) {
-  .splash-screen { background: #121210; }
-  .splash-title { color: #f5f0e8; }
+.splash-screen.zooming-out {
+  transition: opacity 0.45s ease 0.25s;
 }
+
 .splash-screen.hidden-out {
   opacity: 0;
   transform: scale(1.04);
@@ -344,7 +352,7 @@
 .splash-btn-welcome:hover { opacity: 0.78; transform: scale(1.02); }
 </style>
 </head>
-<body>
+<body style="overflow: hidden;">
 
 <!-- SPLASH SCREEN -->
 <div class="splash-screen" id="splash-screen">
@@ -1105,22 +1113,12 @@ function confirmMeal() {
 
 function closeSplash() {
   const splash = document.getElementById('splash-screen');
-  // Déclenche l'animation zoom
   splash.classList.add('zooming-out');
-  // Retire du DOM après la fin de l'animation
-  setTimeout(() => { splash.style.display = 'none'; }, 700);
+  setTimeout(() => {
+    splash.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 700);
 }
-
-// Applique le dark mode au splash via JS pour iOS (contourne les bugs media query)
-(function() {
-  const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const splash = document.getElementById('splash-screen');
-  const title = splash ? splash.querySelector('.splash-title') : null;
-  if (isDark && splash) {
-    splash.style.background = '#121210';
-    if (title) title.style.color = '#f5f0e8';
-  }
-})();
 
 document.addEventListener('DOMContentLoaded', renderAll);
 
