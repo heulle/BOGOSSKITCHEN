@@ -506,8 +506,10 @@
 <!-- CONFIRM MODAL -->
 <div class="modal-overlay" id="confirm-modal" onclick="maybeCloseConfirm(event)">
   <button class="modal-close-btn" id="confirm-close-btn" onclick="closeConfirm()">✕</button>
-  <div class="modal" style="padding:0;overflow:hidden;">
-    <div id="confirm-photo-wrap" style="display:none;" class="carousel-wrap">
+
+  <!-- ÉCRAN 1 : Photo plein cadre -->
+  <div class="modal" id="confirm-screen-1" style="padding:0;overflow:hidden;">
+    <div id="confirm-photo-wrap" class="carousel-wrap" style="display:none;">
       <img id="confirm-photo-img" src="" class="carousel-img active">
       <img id="confirm-photo-img-2" src="" class="carousel-img">
       <div class="carousel-dots" id="carousel-dots" style="display:none;">
@@ -517,33 +519,33 @@
       <button class="carousel-arrow prev" id="carousel-prev" onclick="carouselPrev()" style="display:none;">‹</button>
       <button class="carousel-arrow next" id="carousel-next" onclick="carouselNext()" style="display:none;">›</button>
     </div>
-    <div style="padding:20px 24px 0;">
-      <div style="font-size:36px;margin-bottom:8px" id="confirm-emoji"></div>
-      <div class="modal-title" style="margin-bottom:4px" id="confirm-meal-name"></div>
-      <div id="confirm-ingredients" style="font-size:13px;color:#888;line-height:1.6;margin-bottom:16px;"></div>
-      <button class="recipe-toggle" id="recipe-toggle-btn" onclick="openRecipeModal()" style="display:none">📖 Recette</button>
-      <div style="padding-bottom:20px;border-bottom:1px solid rgba(0,0,0,0.08);"></div>
-    </div>
-    <div style="padding:0 24px;">
-    <div class="form-group">
-      <label class="form-label">🥤 Boisson</label>
-      <div class="boisson-grid">
-        <button class="boisson-opt" data-boisson="Eau" onclick="selectBoisson(this)">💧 Eau</button>
-        <button class="boisson-opt" data-boisson="Soda" onclick="selectBoisson(this)">🥤 Soda</button>
-        <button class="boisson-opt" data-boisson="Bière" onclick="selectBoisson(this)">🍺 Bière</button>
-        <button class="boisson-opt" data-boisson="Vin" onclick="selectBoisson(this)">🍷 Vin</button>
-      </div>
-      <div class="boisson-detail" id="boisson-detail-wrap" style="display:none">
-        <input class="form-input" id="boisson-detail" type="text" placeholder="Précise..." style="margin-top:8px">
+    <!-- fallback emoji si pas de photo -->
+    <div id="confirm-emoji-screen1" style="display:none;font-size:80px;text-align:center;padding:60px 0;"></div>
+    <div style="padding:16px 20px 20px;">
+      <div class="modal-title" style="margin-bottom:4px;" id="confirm-meal-name-s1"></div>
+      <div id="confirm-ingredients-s1" style="font-size:13px;color:#888;line-height:1.6;margin-bottom:16px;"></div>
+      <div class="modal-actions">
+        <button class="btn-save" onclick="goToScreen2()">Je veux ça ! ✓</button>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Un commentaire ? (optionnel)</label>
-      <input class="form-input" id="confirm-comment" type="text" placeholder="ex: sans oignons, avec du parmesan...">
-    </div>
-    <div class="modal-actions" style="padding-bottom:24px;">
-      <button class="btn-save" onclick="confirmMeal()">Ce soir c'est ça ✓</button>
-    </div>
+  </div>
+
+  <!-- ÉCRAN 2 : Détails + confirmation -->
+  <div class="modal" id="confirm-screen-2" style="display:none;padding:20px 24px 0;">
+    <div style="font-size:36px;margin-bottom:8px" id="confirm-emoji"></div>
+    <div class="modal-title" style="margin-bottom:4px" id="confirm-meal-name"></div>
+    <div id="confirm-ingredients" style="font-size:13px;color:#888;line-height:1.6;margin-bottom:16px;"></div>
+    <button class="recipe-toggle" id="recipe-toggle-btn" onclick="openRecipeModal()" style="display:none">📖 Recette</button>
+    <div style="padding-bottom:20px;border-bottom:1px solid rgba(0,0,0,0.08);"></div>
+    <div style="padding:16px 0;">
+      <div class="form-group">
+        <label class="form-label">Un commentaire ? (optionnel)</label>
+        <input class="form-input" id="confirm-comment" type="text" placeholder="ex: sans oignons, avec du parmesan...">
+      </div>
+      <div class="modal-actions" style="padding-bottom:24px;">
+        <button class="btn-cancel" onclick="backToScreen1()" style="background:transparent;border:1px solid #aaa;color:#aaa;">← Retour</button>
+        <button class="btn-save" onclick="confirmMeal()">Ce soir c'est ça ✓</button>
+      </div>
     </div>
   </div>
 </div>
@@ -718,7 +720,7 @@ const DEFAULT_MEALS = [
   {
     id: 26, name: "La Tomate Farcie version Ulrich ⭐", cat: "comfort", emoji: "🍅",
     ingredients: "Tomates · Farce de poulet ou porc/veau · Herbes · Pâtes",
-    photo: "images/la_tomate_farcie_version_ulrich.jpg",
+    photo: "images/la_tomate_farcie_version_ulrich__.jpg",
     recipe: "🤫 Un secret bien gardé. Ce qu'on sait : des tomates généreusement farcies, une farce de viande parfumée aux herbes, et une cuisson qui transforme le tout en quelque chose d'inoubliable. La recette reste entre Ulrich et son four."
   },
   {
@@ -1035,53 +1037,64 @@ function openConfirm(id) {
   const meal = meals.find(m => m.id === id);
   if (!meal) return;
   confirmMealId = id;
-  const emojiEl = document.getElementById('confirm-emoji');
+
+  const photos = meal.photos || (meal.photo ? [meal.photo] : []);
   const photoWrap = document.getElementById('confirm-photo-wrap');
   const photoImg = document.getElementById('confirm-photo-img');
   const photoImg2 = document.getElementById('confirm-photo-img-2');
   const dots = document.getElementById('carousel-dots');
   const prev = document.getElementById('carousel-prev');
   const next = document.getElementById('carousel-next');
-  const photos = meal.photos || (meal.photo ? [meal.photo] : []);
+  const emojiS1 = document.getElementById('confirm-emoji-screen1');
+
+  // Populate screen 1
+  document.getElementById('confirm-meal-name-s1').textContent = meal.name;
+  document.getElementById('confirm-ingredients-s1').textContent = meal.ingredients || '';
+
   if (photos.length > 0) {
     photoWrap.style.display = 'block';
+    emojiS1.style.display = 'none';
     photoImg.src = photos[0];
     photoImg.classList.add('active');
     photoImg2.src = photos[1] || '';
     photoImg2.classList.remove('active');
-    emojiEl.style.display = 'none';
     carouselIndex = 0;
-    if (photos.length > 1) {
-      dots.style.display = 'flex';
-      prev.style.display = 'flex';
-      next.style.display = 'flex';
-    } else {
-      dots.style.display = 'none';
-      prev.style.display = 'none';
-      next.style.display = 'none';
-    }
+    const multi = photos.length > 1;
+    dots.style.display = multi ? 'flex' : 'none';
+    prev.style.display = multi ? 'flex' : 'none';
+    next.style.display = multi ? 'flex' : 'none';
   } else {
     photoWrap.style.display = 'none';
-    emojiEl.style.display = 'block';
-    emojiEl.textContent = meal.emoji;
+    emojiS1.style.display = 'block';
+    emojiS1.textContent = meal.emoji;
   }
+
+  // Populate screen 2
+  document.getElementById('confirm-emoji').textContent = meal.emoji;
   document.getElementById('confirm-meal-name').textContent = meal.name;
   document.getElementById('confirm-ingredients').textContent = meal.ingredients || '';
   const recipeBtn = document.getElementById('recipe-toggle-btn');
-  if (meal.recipe) {
-    recipeBtn.style.display = 'inline-block';
-  } else {
-    recipeBtn.style.display = 'none';
-  }
+  recipeBtn.style.display = meal.recipe ? 'inline-block' : 'none';
   document.getElementById('confirm-comment').value = '';
-  document.getElementById('boisson-detail').value = '';
-  document.getElementById('boisson-detail-wrap').style.display = 'none';
-  document.querySelectorAll('.boisson-opt').forEach(b => b.classList.remove('selected'));
-  selectedBoisson = '';
+
+  // Show screen 1 first
+  document.getElementById('confirm-screen-1').style.display = 'block';
+  document.getElementById('confirm-screen-2').style.display = 'none';
+
   document.getElementById('confirm-modal').classList.add('open');
   document.getElementById('confirm-close-btn').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+}
+
+function goToScreen2() {
+  document.getElementById('confirm-screen-1').style.display = 'none';
+  document.getElementById('confirm-screen-2').style.display = 'block';
   setTimeout(() => document.getElementById('confirm-comment').focus(), 100);
+}
+
+function backToScreen1() {
+  document.getElementById('confirm-screen-2').style.display = 'none';
+  document.getElementById('confirm-screen-1').style.display = 'block';
 }
 
 let carouselIndex = 0;
@@ -1152,14 +1165,11 @@ function confirmMeal() {
   closeConfirm();
   showToast(meal.emoji + ' ' + meal.name + ' confirmé !');
   const subject = encodeURIComponent('BOGOSS KITCHEN (Notification)');
-  const boissonDetail = document.getElementById('boisson-detail').value.trim();
-  const boissonFull = selectedBoisson ? (selectedBoisson + (boissonDetail ? ' — ' + boissonDetail : '')) : 'Non précisée';
   const body = encodeURIComponent(
     'Plat sélectionné ce soir :\n\n'
     + meal.emoji + ' ' + meal.name + '\n'
     + 'Catégorie : ' + catLabel + '\n'
-    + 'Ingrédients : ' + (meal.ingredients || 'N/A') + '\n'
-    + 'Boisson : ' + boissonFull
+    + 'Ingrédients : ' + (meal.ingredients || 'N/A')
     + (comment ? '\n\nCommentaire : ' + comment : '')
   );
   window.location.href = 'mailto:uheulle@gmail.com?subject=' + subject + '&body=' + body;
